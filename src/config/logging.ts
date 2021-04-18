@@ -1,10 +1,7 @@
-/**
- * logging.ts
- * This file contains logging system
- */
+import fs from "fs";
 
-class Log {
- 
+export class Log {
+
  /**
   * getTimeStamp
   *  A function to get current timestamp, 
@@ -12,7 +9,38 @@ class Log {
   * 
   * @return string
   */
-  static getTimeStamp = (): string => new Date().toISOString();
+  private static getTimeStamp = (): string => new Date().toISOString();
+
+  private static getDate(): string {
+    const date: any = new Date();
+
+    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+  }
+
+  /**
+   * writeLog
+   *  A function to write log message to file.
+   *  
+   * @return void
+   */
+  private static writeLog(str: string): void {
+    
+    const currentFileName: string = `./logs/${Log.getDate()}.log`;
+    const logFormat: string = `${str}\n`;
+
+    fs.appendFile(currentFileName, logFormat, (appendError: any) => {
+      if(appendError) {
+
+        Log.e("LOG", "Something error when append", appendError);
+
+        fs.writeFile(currentFileName, logFormat, (writeError: any) => {
+          Log.e("LOG", "Something error when write", writeError);
+        });
+      }
+    });
+
+
+  }
 
   /**
    * i
@@ -31,6 +59,8 @@ class Log {
       console.log(generatedLog);
   
     }
+
+    Log.writeLog(generatedLog);
   }
 
   /**
@@ -50,6 +80,8 @@ class Log {
        console.info(generatedLog);
    
      }
+
+     Log.writeLog(generatedLog);
    }
 
   /**
@@ -69,6 +101,8 @@ class Log {
       console.error(generatedLog);
   
     }
+
+    Log.writeLog(generatedLog);
   }
 
   /**
@@ -88,9 +122,7 @@ class Log {
       console.warn(generatedLog);
   
     }
+
+    Log.writeLog(generatedLog);
   }
 }
-
-export default {
-  Log
-};

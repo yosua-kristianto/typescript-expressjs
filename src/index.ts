@@ -1,11 +1,15 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 
-import logging from './config/logging';
 import config from './config/config';
-import base from './model/dto/BaseResponse';
+import { Log } from './config/logging';
+
+import { BaseResponse } from './model/dto/BaseResponse';
 
 const app = express();
 
+/**
+ * @var string NAMESPACE
+ */
 const NAMESPACE = 'Server';
 
 
@@ -22,6 +26,15 @@ const NAMESPACE = 'Server';
 |
 */
 
+import middleware from './api/middleware/middleware';
+
+/**
+ * Loop trough ./api/middleware/middleware.ts
+ */
+middleware.forEach((e, i) => {
+  app.use(e);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Route Part
@@ -35,11 +48,8 @@ const NAMESPACE = 'Server';
 |
 */
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-
-  logging.Log.d(NAMESPACE, "Hello World", res);
-  res.send('Hello World');
-});
+import routes from './routes/routes';
+app.use('/api', routes);
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +63,24 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new Error('Not Found');
-
-  return base.BaseResponse.error("Not Found", 404, res);
+  return BaseResponse.error("Not Found", 404, res);
 });
+
+/*
+|--------------------------------------------------------------------------
+| Exception Reporting
+|--------------------------------------------------------------------------
+|
+| This part contains the exception reporting.
+| Feel free to change reporting configuration.
+|
+*/
+
+/**
+ * Process watcher
+ *  Make sure you don't fuck with `logging.ts`'s log file path.
+ */
+import process from "./config/exception";
 
 /*
 |--------------------------------------------------------------------------
@@ -70,5 +95,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 */
 
 app.listen(config.server.port, () => {
-  logging.Log.i(NAMESPACE, `Server is running on ${config.server.port}`);
+  Log.i(NAMESPACE, `Server is running on ${config.server.port}`);
 });

@@ -1,6 +1,4 @@
-import express, { Request, Response, NextFunction } from 'express';
-
-const middleware = express();
+import { Request, Response, NextFunction } from 'express';
 
 /**
  * cors.ts

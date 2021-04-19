@@ -1,6 +1,3 @@
-import express from 'express';
-const middleware = express();
-
 /*
 |--------------------------------------------------------------------------
 | Middleware 

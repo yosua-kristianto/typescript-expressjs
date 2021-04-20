@@ -12,6 +12,6 @@ export default process.on('uncaughtException', (err: any, origin: any) => {
   Log.e(
     "UNCAUGHT EXCEPTION", 
     `Caught exception: ${err}\n`
-    + `Exception origin: ${origin}\n\n`
+    + `Exception origin: ${JSON.stringify(origin)}\n\n`
   );
 });

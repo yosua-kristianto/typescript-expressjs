@@ -2,7 +2,7 @@ import { Controller } from './controller';
 
 import { Request, Response } from 'express';
 
-import { BaseResponse } from '../../model/dto/BaseResponse';
+import { BaseResponse } from '../../model/dto/base-response';
 
 
 class ExampleController extends Controller {

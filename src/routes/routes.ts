@@ -1,4 +1,4 @@
-import { BaseResponse } from '../model/dto/BaseResponse';
+import { BaseResponse } from '../model/dto/base-response';
 import express, { Router } from 'express';
 const route = express.Router();
 

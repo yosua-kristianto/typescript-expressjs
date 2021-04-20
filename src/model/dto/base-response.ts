@@ -36,7 +36,7 @@ export class BaseResponse {
    *  A static function that return BaseResponse as not okay response.
    *  Oftenly used for Internal Server Error.
    */
-  static error(message: string, code: number = 200, res: Response, data?: any): Response{
+  static error(message: string, res: Response, code: number = 200, data?: any): Response{
     return res
             .status(500)
               .json((

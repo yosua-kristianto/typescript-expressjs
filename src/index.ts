@@ -1,9 +1,9 @@
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 
 import config from './config/config';
 import { Log } from './config/logging';
 
-import { BaseResponse } from './model/dto/BaseResponse';
+import { BaseResponse } from './model/dto/base-response';
 
 const app = express();
 
@@ -63,16 +63,16 @@ app.use('/api', routes);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const error = new Error('Not Found');
-  return BaseResponse.error("Not Found", 404, res);
+  return BaseResponse.error("Not Found", res, 404);
 });
 
 /*
 |--------------------------------------------------------------------------
-| Exception Reporting
+| Configuration Part
 |--------------------------------------------------------------------------
 |
-| This part contains the exception reporting.
-| Feel free to change reporting configuration.
+| This part contains the configurations.
+| Feel free to change or update the configuration.
 |
 */
 
@@ -80,11 +80,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
-import process from "./config/exception";
+import "./config/exception";
+import "./config/database";
 
 /*
 |--------------------------------------------------------------------------
-| Request Listener
+| Request Listener / Run The Application
 |--------------------------------------------------------------------------
 |
 | The main entry point for the lopping event listener for 

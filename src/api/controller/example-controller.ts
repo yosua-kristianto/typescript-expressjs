@@ -7,14 +7,14 @@ import { BaseResponse } from '../../model/dto/base-response';
 
 class ExampleController extends Controller {
   
-  public exampleRest = (request: Request, response: Response): Response => {
+  public  exampleRest = async (request: Request, response: Response): Promise<any> => {
     
     const dummyData = {
       data: "string", 
       attribute: 1
     };
 
-    return BaseResponse.ok(
+    return new BaseResponse().ok(
       dummyData,
       "Success",
       response

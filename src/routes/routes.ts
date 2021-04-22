@@ -50,7 +50,7 @@ route.get(`${EXAMPLE_PREFIX}`, ExampleController.exampleRest);
      "time": date.toLocaleString()
    };
  
-   return BaseResponse.ok(
+   return new BaseResponse().ok(
      data,
      config.server.app,
      res

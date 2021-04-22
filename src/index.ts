@@ -53,21 +53,6 @@ app.use('/api', routes);
 
 /*
 |--------------------------------------------------------------------------
-| Route Fallback
-|--------------------------------------------------------------------------
-|
-| If the routes happened to be not found, this section will be called 
-| automatically. Feel free to change the behavior.
-|
-*/
-
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const error = new Error('Not Found');
-  return BaseResponse.error("Not Found", res, 404);
-});
-
-/*
-|--------------------------------------------------------------------------
 | Configuration Part
 |--------------------------------------------------------------------------
 |
@@ -82,6 +67,41 @@ app.use((req: Request, res: Response, next: NextFunction) => {
  */
 import "./config/exception";
 import "./config/database";
+import { handleError } from './config/exception';
+
+/*
+|--------------------------------------------------------------------------
+| Route Fallback
+|--------------------------------------------------------------------------
+|
+| If the routes happened to be not found, this section will be called 
+| automatically. Feel free to change the behavior.
+|
+*/
+
+/**
+ * Throw New Exception Fallback
+ */
+app.use((error: any, request: Request, response: Response, next: NextFunction) => {
+
+  console.log(error);
+
+  if(error){
+    handleError(response, error);
+  }else{
+    next();
+  }
+
+});
+
+/**
+ * Not found fallback
+ */
+app.use((req: Request, response: Response, next: NextFunction) => {
+  return new BaseResponse().error("Not Found", response, 404);
+});
+
+
 
 /*
 |--------------------------------------------------------------------------

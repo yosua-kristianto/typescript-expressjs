@@ -1,41 +1,76 @@
 import { DataTypes } from 'sequelize';
-import { Model, AllowNull, AutoIncrement, Column, NotEmpty, PrimaryKey, Table } from 'sequelize-typescript';
+import { Model, AllowNull, AutoIncrement, Column, PrimaryKey, Table } from 'sequelize-typescript';
 
+/**
+ * UserInterface
+ *  
+ * @hidable_parameters
+ *  password
+ *  is_delete
+ */ 
 export interface UserItf {
   id?: number | null
-  name: string
   email: string
-  password: string
+  phone: string
+  password?: string | null
+  is_deleted?: number | null
 }
 
 @Table(
   {
     tableName    : 'users',
     timestamps   : true,
-    paranoid     : true,
+    paranoid    : true,
     underscored  : true
   }
 )
-export default class User extends Model implements UserItf {
+class User extends Model implements UserItf {
+
+  /**
+   * @var array
+   * hidden
+   *  Hide attributes with variable names below
+   */
+  private hidden = [
+    'user_password',
+    'user_is_delete'
+  ];
   
-  @AutoIncrement
   @PrimaryKey
+  @AutoIncrement
   @Column(DataTypes.BIGINT)
-  public id?: number | null = 1;
+  id?: number | null;
 
   @AllowNull(false)
-  @NotEmpty
-  @Column(DataTypes.STRING(60))
-  public name: string = "Some Name String";
-
-  @AllowNull(false)
-  @NotEmpty
   @Column(DataTypes.STRING(100))
-  public email: string = "lala@example.com";
+  email!: string;
 
   @AllowNull(false)
-  @NotEmpty
+  @Column(DataTypes.STRING(20))
+  phone!: string;
+
+  @AllowNull(false)
   @Column(DataTypes.TEXT)
-  public password: string = "*******";
+  password?: string | null;
+
+  @AllowNull(true)
+  @Column(DataTypes.SMALLINT)
+  is_deleted?: number | null;
+
+  /**
+   * toJSON
+   *  Sequelize function settings to cast this model
+   *  into JSON
+   */
+  toJSON () {
+    // hide hidden fields
+    let attributes = Object.assign({}, this.get())
+    for (let a of this.hidden) {
+      delete attributes[a]
+    }
+    return attributes
+  }
 
 }
+
+export default User;

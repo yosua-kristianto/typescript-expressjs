@@ -28,7 +28,17 @@ const mainConnection = (): Sequelize => {
 
       try{
         await sequelize.sync({
-          force: true
+          /**
+           uncomment this part to force 
+           re-sync the database. 
+           
+          force: true,
+          
+          */
+          
+          "alter": {
+            drop: false
+          }
         });
       }catch(error){
         Log.e(NAMESPACE, error.message);

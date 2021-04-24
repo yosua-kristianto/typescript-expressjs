@@ -71,6 +71,17 @@ class User extends Model implements UserItf {
     return attributes
   }
 
+  /**
+   * Virtual Attributes
+   */
+  @Column({
+    type: DataTypes.VIRTUAL(DataTypes.STRING)
+  })
+  get some_virtual_attributes(): string {
+    return `${this.getDataValue('email')} ${this.getDataValue('phone')}`;
+  }
+
+
 }
 
 export default User;

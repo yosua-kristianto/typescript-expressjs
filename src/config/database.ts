@@ -16,7 +16,7 @@ const mainConnection = (): Sequelize => {
     {
       host        : config.database.main.uri,
       dialect     : config.database.main.dialect,
-      logging     : (... msg) => console.log(msg),
+      // logging     : (... msg) => console.log(msg),
       models      : [path.join(__dirname, "../model/entity")]
     }
   );

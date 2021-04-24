@@ -7,10 +7,33 @@ import { BaseResponse } from './model/dto/base-response';
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({
+  extended: true
+}));
+
 /**
  * @var string NAMESPACE
  */
 const NAMESPACE = 'Server';
+
+/*
+|--------------------------------------------------------------------------
+| Configuration Part
+|--------------------------------------------------------------------------
+|
+| This part contains the configurations.
+| Feel free to change or update the configuration.
+|
+*/
+
+/**
+ * Process watcher
+ *  Make sure you don't fuck with `logging.ts`'s log file path.
+ */
+//  import "./config/exception";
+ import "./config/database";
+ import { handleError } from './config/exception';
 
 
 /*
@@ -53,24 +76,6 @@ app.use('/api', routes);
 
 /*
 |--------------------------------------------------------------------------
-| Configuration Part
-|--------------------------------------------------------------------------
-|
-| This part contains the configurations.
-| Feel free to change or update the configuration.
-|
-*/
-
-/**
- * Process watcher
- *  Make sure you don't fuck with `logging.ts`'s log file path.
- */
-import "./config/exception";
-import "./config/database";
-import { handleError } from './config/exception';
-
-/*
-|--------------------------------------------------------------------------
 | Route Fallback
 |--------------------------------------------------------------------------
 |
@@ -78,10 +83,6 @@ import { handleError } from './config/exception';
 | automatically. Feel free to change the behavior.
 |
 */
-
-/**
- * Throw New Exception Fallback
- */
 app.use((error: any, request: Request, response: Response, next: NextFunction) => {
 
   console.log(error);
@@ -94,9 +95,6 @@ app.use((error: any, request: Request, response: Response, next: NextFunction) =
 
 });
 
-/**
- * Not found fallback
- */
 app.use((req: Request, response: Response, next: NextFunction) => {
   return new BaseResponse().error("Not Found", response, 404);
 });

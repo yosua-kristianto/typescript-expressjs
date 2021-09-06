@@ -1,5 +1,5 @@
-import { BaseResponse } from '../model/dto/base-response';
-import express, { Router } from 'express';
+import { BaseResponse } from '../model/dto/BaseResponse';
+import express from 'express';
 const route = express.Router();
 
 /*
@@ -14,7 +14,17 @@ const route = express.Router();
 |
 */
 
-import ExampleController from '../api/controller/example-controller';
+import ExampleController from '../api/controller/ExampleController';
+
+/*
+ |--------------------------------------------------------------------------
+ | Collective Validation Imports Part
+ |--------------------------------------------------------------------------
+ |
+ | Here is where you can register Request Validation routes for your controller.
+ |
+ */
+import ExampleValidation from '../common/validation/ExampleValidation';
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +43,14 @@ import ExampleController from '../api/controller/example-controller';
 const EXAMPLE_PREFIX = "/example";
 
 route.get(`${EXAMPLE_PREFIX}`, ExampleController.exampleRest);
+route.post(`${EXAMPLE_PREFIX}`, ExampleValidation, ExampleController.exampleValidatedRest);
 
 
 
 /**
  * API root point. Just to make sure the API is okay.
  */
- import config from '../config/config';
+ import config from '../config/Config';
  
  route.get('/', (req, res) => {
    const date = new Date();  
@@ -50,7 +61,7 @@ route.get(`${EXAMPLE_PREFIX}`, ExampleController.exampleRest);
      "time": date.toLocaleString()
    };
  
-   return new BaseResponse().ok(
+   return BaseResponse.ok(
      data,
      config.server.app,
      res

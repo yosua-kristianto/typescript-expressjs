@@ -1,8 +1,8 @@
 import process from "process";
-import { Log } from "./logging";
+import { Log } from "./Logging";
 
 import { Response } from 'express';
-import { BaseResponse } from '../model/dto/base-response';
+import { BaseResponse } from '../model/dto/BaseResponse';
 
 /**
  * ErrorHandler
@@ -11,13 +11,19 @@ import { BaseResponse } from '../model/dto/base-response';
  */
 export class ErrorHandler extends Error {
 
-  statusCode: number;
+  statusCode: string;
   message: string;
+  data?: any;
 
-  constructor(statusCode: number, message: string) {
+  constructor(statusCode: string, message: string, data?: any) {
     super();
     this.statusCode = statusCode;
     this.message = message;
+    this.data = data;
+
+    /**
+     * You can put your error logger in here.
+     */
   }
 
 }
@@ -25,15 +31,15 @@ export class ErrorHandler extends Error {
 /**
  * This is where error being returned as response.
  */
-export const handleError = (res: Response, err: any): void => {
-  Log.e("Unhandled Exception", err);
-  const { statusCode, message } = err;
+export const handleError = (res: Response, err: any): Response => {
+  Log.e("Unhandled Exception", JSON.stringify(err.stack));
+  const { statusCode, message, data } = err;
 
-  new BaseResponse()
-        .error(
-          message,
-          res,
-          statusCode
+  return BaseResponse.error(
+    message,
+    res,
+    statusCode,
+    data
   );
 }
 
@@ -48,6 +54,7 @@ export default process.on('uncaughtException', (err: any, origin: any) => {
   Log.e(
     "UNCAUGHT EXCEPTION", 
     `Caught exception: ${err}\n`
-    + `Exception origin: ${JSON.stringify(origin)}\n\n`
+    + `Exception origin: ${JSON.stringify(origin)}\n\n`,
+    __filename
   );
 });

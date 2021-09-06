@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { Model, AllowNull, AutoIncrement, Column, PrimaryKey, Table } from 'sequelize-typescript';
+import { Model, Column, Table, Default } from 'sequelize-typescript';
 
 /**
  * UserInterface
@@ -32,29 +32,47 @@ class User extends Model implements UserItf {
    *  Hide attributes with variable names below
    */
   private hidden = [
-    'user_password',
-    'user_is_delete'
+    'password',
+    'is_deleted'
   ];
   
-  @PrimaryKey
-  @AutoIncrement
-  @Column(DataTypes.BIGINT)
+  @Column({
+    autoIncrement: true,
+    primaryKey: true,
+    field: "id",
+    type: DataTypes.BIGINT
+  })
   id?: number | null;
 
-  @AllowNull(false)
-  @Column(DataTypes.STRING(100))
+  @Column({
+    allowNull: false,
+    field: "email",
+    type: DataTypes.STRING(255)
+  })
   email!: string;
 
-  @AllowNull(false)
-  @Column(DataTypes.STRING(20))
+  @Column({
+    allowNull: false,
+    field: "phone",
+    type: DataTypes.STRING(20)
+  })
   phone!: string;
 
-  @AllowNull(false)
-  @Column(DataTypes.TEXT)
+  @Column({
+    allowNull: false,
+    field: "password",
+    comment: "Make sure this is encrypted!!!",
+    type: DataTypes.TEXT
+  })
   password?: string | null;
 
-  @AllowNull(true)
-  @Column(DataTypes.SMALLINT)
+  @Default(0)
+  @Column({
+    allowNull: false,
+    field: "is_deleted",
+    comment: "0: Not Deleted | 1: Deleted",
+    type: DataTypes.SMALLINT
+  })
   is_deleted?: number | null;
 
   /**

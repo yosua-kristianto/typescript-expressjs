@@ -14,7 +14,7 @@ export class Log {
   private static getDate(): string {
     const date: any = new Date();
 
-    return `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
 
   /**

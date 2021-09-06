@@ -1,9 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
+require('express-async-errors');
 
-import config from './config/config';
-import { Log } from './config/logging';
+import config from './config/Config';
+import { Log } from './config/Logging';
 
-import { BaseResponse } from './model/dto/base-response';
+import { BaseResponse } from './model/dto/BaseResponse';
 
 const app = express();
 
@@ -31,9 +32,8 @@ const NAMESPACE = 'Server';
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
-//  import "./config/exception";
- import "./config/database";
- import { handleError } from './config/exception';
+ import "./config/Database";
+ import { handleError } from './config/Exception';
 
 
 /*
@@ -49,7 +49,7 @@ const NAMESPACE = 'Server';
 |
 */
 
-import middleware from './api/middleware/middleware';
+import middleware from './api/middleware/Middleware';
 
 /**
  * Loop trough ./api/middleware/middleware.ts
@@ -71,7 +71,7 @@ middleware.forEach((e, i) => {
 |
 */
 
-import routes from './routes/routes';
+import routes from './routes/Routes';
 app.use('/api', routes);
 
 /*
@@ -95,10 +95,7 @@ app.use((error: any, request: Request, response: Response, next: NextFunction) =
 
 });
 
-app.use((req: Request, response: Response, next: NextFunction) => {
-  return new BaseResponse().error("Not Found", response, 404);
-});
-
+app.use((response: Response) => BaseResponse.error("Not Found", response, "404"));
 
 
 /*

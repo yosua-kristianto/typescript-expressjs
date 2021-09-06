@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize-typescript';
-import config from './config';
-import { Log } from './logging';
+import config from './Config';
+import { Log } from './Logging';
 import path from 'path';
 
-const NAMESPACE: string = "DATABASE"
+const NAMESPACE: string = "DATABASE";
 
 /**
  * Authenticate the database.
@@ -40,7 +40,7 @@ const mainConnection = (): Sequelize => {
             drop: false
           }
         });
-      }catch(error){
+      }catch(error: any){
         Log.e(NAMESPACE, error.message);
       }
     })

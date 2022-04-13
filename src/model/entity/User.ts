@@ -3,11 +3,11 @@ import { Model, Column, Table, Default } from 'sequelize-typescript';
 
 /**
  * UserInterface
- *  
+ *
  * @hidable_parameters
  *  password
  *  is_delete
- */ 
+ */
 export interface UserItf {
   id?: number | null
   email: string
@@ -35,7 +35,7 @@ class User extends Model implements UserItf {
     'password',
     'is_deleted'
   ];
-  
+
   @Column({
     autoIncrement: true,
     primaryKey: true,

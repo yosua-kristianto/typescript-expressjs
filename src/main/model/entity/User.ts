@@ -16,14 +16,12 @@ export interface UserItf {
   is_deleted?: number | null
 }
 
-@Table(
-  {
+@Table({
     tableName    : 'users',
     timestamps   : true,
     paranoid    : true,
     underscored  : true
-  }
-)
+})
 class User extends Model implements UserItf {
 
   /**

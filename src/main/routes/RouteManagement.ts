@@ -16,36 +16,7 @@ const route = express.Router();
 
 import ExampleController from '../api/controller/ExampleController';
 
-/*
- |--------------------------------------------------------------------------
- | Collective Validation Imports Part
- |--------------------------------------------------------------------------
- |
- | Here is where you can register Request Validation routes for your controller.
- |
- */
-import ExampleValidation from '../common/validation/ExampleValidation';
-
-/*
-|--------------------------------------------------------------------------
-| Route Part
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application.
-| Do you started to remembering something with this route?
-|
-*/
-
-/**
- * /example prefix
- */
-
-const EXAMPLE_PREFIX = "/example";
-
-route.get(`${EXAMPLE_PREFIX}`, ExampleController.exampleRest);
-route.post(`${EXAMPLE_PREFIX}`, ExampleValidation, ExampleController.exampleValidatedRest);
-
-
+route.use(ExampleController);
 
 /**
  * API root point. Just to make sure the API is okay.
@@ -72,4 +43,4 @@ route.post(`${EXAMPLE_PREFIX}`, ExampleValidation, ExampleController.exampleVali
 /**
  * Always put this on the bottom of routes file
  */
-export = route;
+export default route;

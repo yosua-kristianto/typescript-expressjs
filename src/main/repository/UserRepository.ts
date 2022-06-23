@@ -1,4 +1,4 @@
-import User from '../model/entity/user';
+import User from '../model/entity/User';
 import { CreateUserDTO } from '../model/dto/request/CreateUserDTO';
 
 export interface UserRepository {

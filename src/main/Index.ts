@@ -1,5 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Request, Response, NextFunction } from 'express';
-require('express-async-errors');
+
+import 'express-async-errors'; 
 
 import config from './config/Config';
 import { Log } from './config/Logging';
@@ -28,11 +32,23 @@ const NAMESPACE = 'Server';
 |
 */
 
+console.log(`
+Session ${new Date()}
+ 
+   ________  _____    __ ___  __
+  / ____/ / / /   |  / //_/ |/ /
+ / /   / / / / /| | / ,<  |   / 
+/ /___/ /_/ / ___ |/ /| |/   |  
+\\____/\\____/_/  |_/_/ |_/_/|_|  
+                                
+
+`);
+
 /**
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
- import "./config/Database";
+ import "./main/config/Database";
  import { handleError } from './config/Exception';
 
 
@@ -71,7 +87,7 @@ middleware.forEach((e, i) => {
 |
 */
 
-import routes from './routes/Routes';
+import routes from './routes/RouteManagement';
 app.use('/api', routes);
 
 /*

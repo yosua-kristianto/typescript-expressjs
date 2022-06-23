@@ -4,6 +4,6 @@
  * You can specify every unit Tests in here.
  */
 
-import "./example";
+import "./example/Index";
 
 process.exit(0);

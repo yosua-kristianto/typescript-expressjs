@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node dist/test/Index.ts",
+    "test": "node dist/test/Index.js",
     "test-dev": "nodemon src/test/Index.ts",
-    "start": "node dist/main/index.js",
+    "start": "node dist/main/Index.js",
     "dev": "nodemon src/main/index.ts",
     "build": "tsc -p ."
   },

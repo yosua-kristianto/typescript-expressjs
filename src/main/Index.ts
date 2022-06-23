@@ -48,7 +48,7 @@ Session ${new Date()}
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
- import "./main/config/Database";
+ import "./config/Database";
  import { handleError } from './config/Exception';
 
 

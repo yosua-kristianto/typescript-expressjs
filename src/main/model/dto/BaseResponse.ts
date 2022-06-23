@@ -38,7 +38,9 @@ export class BaseResponse {
     baseResponse.message = message;
     baseResponse.data = data || null;
 
-    console.log(res);
+    if (process.env.APP_DEBUG == "true") {
+      console.log(res);
+    }
 
     return res
             .status(500)

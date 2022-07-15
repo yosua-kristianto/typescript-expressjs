@@ -8,7 +8,7 @@ const route = express.Router();
 |--------------------------------------------------------------------------
 |
 | Here is where you can register controller that you've already exported
-| in ./api/controller/controller-file
+| in ./api/controller/ControllerFile
 | Do as you like, but for me it's easier to format the imported variable 
 | with PascalCase.
 |
@@ -16,6 +16,7 @@ const route = express.Router();
 
 import ExampleController from '../api/controller/ExampleController';
 
+// Register your Controller in here
 route.use(ExampleController);
 
 /**
@@ -27,14 +28,14 @@ route.use(ExampleController);
    const date = new Date();  
    
    const data = {
-     "app": config.server.hostname,
+     "app": config.server.app,
      "app_time_zone": Intl.DateTimeFormat().resolvedOptions().timeZone,
      "time": date.toLocaleString()
    };
  
    return BaseResponse.ok(
      data,
-     config.server.app,
+     "This service is running",
      res
    );
  });

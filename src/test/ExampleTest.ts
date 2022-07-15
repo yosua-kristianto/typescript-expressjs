@@ -1,4 +1,4 @@
-import {ExampleControllerHandler} from "../../main/handler/ExampleControllerHandler";
+import {ExampleControllerHandler} from "../main/handler/ExampleControllerHandler";
 
 async function main(): Promise<void> {
   const exampleHandler = new ExampleControllerHandler();

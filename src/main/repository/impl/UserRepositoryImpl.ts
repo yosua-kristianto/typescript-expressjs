@@ -19,9 +19,13 @@ class UserRepositoryImpl implements UserRepository {
 
   getAllUser = async(): Promise<Array<User>> => User.findAll({where: {is_deleted: 0}});
 
-  createUser(request: CreateUserDTO): Promise<User> {
-    throw new Error('Method not implemented.');
-  }
+  createUser = async (request: CreateUserDTO): Promise<User> =>
+    User.create({
+      "email": request.email,
+      "phone": request.phone,
+      "password": "default",
+      "is_deleted": 0
+    });
     
 }
 

@@ -14,10 +14,12 @@ const mainConnection = (): Sequelize => {
     config.database.main.username,
     config.database.main.password,
     {
-      host        : config.database.main.uri,
-      dialect     : config.database.main.dialect,
-      // logging     : (... msg) => console.log(msg),
-      models      : [path.join(__dirname, "../model/entity")]
+      "host"        : config.database.main.uri,
+      "dialect"     : config.database.main.dialect,
+      "port"        : config.database.main.port,
+      // "logging"     : (... msg) => console.log(msg),
+      // "logging"     : false
+      "models"      : [path.join(__dirname, "../model/entity")]
     }
   );
 
@@ -29,9 +31,10 @@ const mainConnection = (): Sequelize => {
       try{
         await sequelize.sync({
           /**
-           uncomment this part to force 
-           re-sync the database. 
-           
+           If you uncomment this, you want to comment the alter option.
+           With this option uncommented, the database table instance
+           will be created by force (By Dropping, and then re create the table)
+
           force: true,
           
           */

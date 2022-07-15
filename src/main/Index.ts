@@ -70,7 +70,7 @@ import middleware from './api/middleware/Middleware';
 /**
  * Loop trough ./api/middleware/middleware.ts
  */
-middleware.forEach((e, i) => {
+middleware.forEach((e) => {
   app.use(e);
 });
 
@@ -111,7 +111,7 @@ app.use((error: any, request: Request, response: Response, next: NextFunction) =
 
 });
 
-app.use((error: any, response: Response) => response.status(500).json(BaseResponse.custom(false, "404", "Not Found", null)));
+app.use((error: any, response: Response) => response.status(404).json(BaseResponse.custom(false, "404", "Not Found", null)));
 
 
 /*

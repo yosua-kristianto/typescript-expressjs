@@ -111,7 +111,7 @@ app.use((error: any, request: Request, response: Response, next: NextFunction) =
 
 });
 
-app.use((response: Response) => BaseResponse.error("Not Found", response, "404"));
+app.use((error: any, response: Response) => response.status(500).json(BaseResponse.custom(false, "404", "Not Found", null)));
 
 
 /*

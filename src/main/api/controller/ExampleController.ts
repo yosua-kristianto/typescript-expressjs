@@ -14,9 +14,18 @@ class ExampleController extends Controller {
   public routes = (): express.Router => {
 
     /**
+     * @swagger
+     *
+     * /example
+     *
+     * get:
+     *  description: This API will return every request that sent to body.
+     *  response:
+     *    '200': request.body
+     *
      * exampleRest
      * 
-     * This API will return every request that sent to body.
+     *
      * 
      * /api/example
      * 

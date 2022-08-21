@@ -4,11 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node dist/test/Index.js",
-    "test-dev": "nodemon src/test/Index.ts",
-    "start": "node dist/main/Index.js",
     "dev": "nodemon src/main/index.ts",
-    "build": "tsc -p ."
+    "start": "node dist/main/Index.js",
+    "build": "tsc -p .",
+
+    "test": "node dist/test/Index.js",
+    "test:dev": "nodemon src/test/Index.ts",
+
+    "db:init": "npx sequelize db:create",
+    "migrate": "npx sequelize db:migrate",
+    "migrate:refresh": "npx sequelize db:migrate:undo:all & npx sequelize db:migrate",
+    "seed": "npx seed:all",
+    "seed:refresh": "npx db:seed:undo:all & npx db:seed:all",
+
+    "deploy:production": "npm run migrate & npm run build & npm run start",
+    "deploy:production:dummies": "npm run migrate:refresh & npm run seed & npm run build & npm run start"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +31,7 @@
     "typescript-cli": "^0.1.0"
   },
   "dependencies": {
+    "@babel/register": "^7.18.9",
     "@types/axios": "^0.14.0",
     "@types/bluebird": "^3.5.36",
     "@types/dotenv": "^8.2.0",
@@ -35,6 +46,7 @@
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.20.1",
+    "sequelize-cli": "^6.4.1",
     "sequelize-typescript": "^2.1.3"
   }
 }

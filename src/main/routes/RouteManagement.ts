@@ -15,9 +15,11 @@ const route = express.Router();
 */
 
 import ExampleController from '../api/controller/ExampleController';
+import UserController from '../api/controller/UserController';
 
 // Register your Controller in here
 route.use(ExampleController);
+route.use(UserController);
 
 /**
  * API root point. Just to make sure the API is okay.

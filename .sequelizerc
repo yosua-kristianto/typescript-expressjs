@@ -1,0 +1,9 @@
+require('@babel/register')
+const path = require('path')
+
+module.exports = {
+  "env": 'main',
+  "config": path.resolve('./src/resources/sequelize-cli', 'SequelizeCliConfig.js'),
+  "seeders-path": path.resolve('./src/resources/sequelize-cli/seeders/'),
+  "migrations-path": path.resolve('./src/resources/sequelize-cli/migrations/'),
+}

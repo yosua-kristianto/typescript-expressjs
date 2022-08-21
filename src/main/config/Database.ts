@@ -27,25 +27,6 @@ const mainConnection = (): Sequelize => {
     .authenticate()
     .then(async () => {
       Log.d(NAMESPACE, `Connection to ${config.database.main.database} has been established.`);
-
-      try{
-        await sequelize.sync({
-          /**
-           If you uncomment this, you want to comment the alter option.
-           With this option uncommented, the database table instance
-           will be created by force (By Dropping, and then re create the table)
-
-          force: true,
-          
-          */
-          
-          "alter": {
-            drop: false
-          }
-        });
-      }catch(error: any){
-        Log.e(NAMESPACE, error.message);
-      }
     })
     .catch(error => {
       Log.e(NAMESPACE, `Connection to ${config.database.main.database} cannot be established: ${error}`);

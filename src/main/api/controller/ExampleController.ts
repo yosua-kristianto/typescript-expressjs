@@ -3,7 +3,6 @@ import express, { Request, Response } from 'express';
 import { BaseResponse } from '../../model/dto/BaseResponse';
 import ExampleValidation from '../../common/validation/ExampleValidation';
 import AdditionParamsRequestValidation from "../../common/validation/example/AdditionParamsRequestValidation";
-import {ExampleAgeBelowEightTeenException} from "../../common/exception/example/ExampleAgeBelowEightTeenException";
 import ExampleAgeInputRequestValidation from "../../common/validation/example/ExampleAgeInputRequestValidation";
 import {ExampleControllerHandler} from "../../handler/ExampleControllerHandler";
 
@@ -14,30 +13,63 @@ class ExampleController extends Controller {
   public routes = (): express.Router => {
 
     /**
+     * exampleValidatedRest
+     *
      * @swagger
+     * /api/example:
+     *  get:
+     *    parameters:
+     *    - in: body
+     *      schema:
+     *        type: object
+     *        properties:
+     *          name:
+     *            type: string
+     *            example: "Kinthil"
+     *    description: This API will return every request that sent to body, with constraint of validation provided.
+     *    responses:
+     *      200:
+     *        description: This API will return the exact same from your request
+     *        schema:
+     *          type: object
+     *          properties:
+     *            name:
+     *              type: string
+     *              example: "Kinthil"
      *
-     * /example
      *
-     * get:
-     *  description: This API will return every request that sent to body.
-     *  response:
-     *    '200': request.body
-     *
-     * exampleRest
-     * 
-     *
-     * 
-     * /api/example
-     * 
-     * @param request 
-     * @param response 
-     * @returns 
+     * @see ExampleValidation
      */
     app.get("/example", (request: Request, response: Response) => BaseResponse.ok(request.body, "Success", response));
 
     /**
      * exampleValidatedRest
-     * This API will return every request that sent to body, with constraint of validation provided. 
+     *
+     * @swagger
+     * /api/example:
+     *  post:
+     *    parameters:
+     *    - in: body
+     *      schema:
+     *        type: object
+     *        required:
+     *          - name
+     *        properties:
+     *          name:
+     *            type: string
+     *            example: "Kinthil"
+     *    description: This API will return every request that sent to body, with constraint of validation provided.
+     *    responses:
+     *      200:
+     *        description: This API will return the exact same from your request
+     *        schema:
+     *          type: object
+     *          properties:
+     *            name:
+     *              type: string
+     *              example: "Kinthil"
+     *
+     *
      * @see ExampleValidation
      */
     app.post("/example", ExampleValidation, (request: Request, response: Response) => {
@@ -47,8 +79,34 @@ class ExampleController extends Controller {
     });
 
     /**
-     * exampleHandlerUsage
-     * This API will give you an example of using handler.
+     * addition
+     *
+     * @swagger
+     * /api/addition:
+     *  post:
+     *    parameters:
+     *    - in: body
+     *      schema:
+     *        type: object
+     *        required:
+     *          - name
+     *        properties:
+     *          name:
+     *            type: string
+     *            example: "Kinthil"
+     *    description: This API will return every request that sent to body, with constraint of validation provided.
+     *    responses:
+     *      200:
+     *        description: This API will return the exact same from your request
+     *        schema:
+     *          type: object
+     *          properties:
+     *            name:
+     *              type: string
+     *              example: "Kinthil"
+     *
+     *
+     * @see ExampleValidation
      */
     app.post("/addition", AdditionParamsRequestValidation, (request: Request, response: Response) => {
       super.requestValidator(request);

@@ -1,0 +1,22 @@
+/api/example:
+  post:
+    parameters:
+    - in: body
+      schema:
+        type: object
+        required:
+          - name
+        properties:
+          name:
+            type: string
+            example: "Kinthil"
+    description: This API will create new user data.
+    responses:
+      200:
+        description: This API will return the exact same from your request
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Kinthil"

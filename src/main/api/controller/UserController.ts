@@ -13,19 +13,31 @@ class UserController extends Controller {
   public routes = (): express.Router => {
 
     /**
-     * @method post
      * createUser
-     * 
-     * This API will create new user data.
-     * 
-     * @request
-     * 
-     * ```
-     * {
-     *  "email": "example@domain.com",
-     *  "phone": "081271975152"
-     * }
-     * ```
+     *
+     * @swagger
+     * /api/user:
+     *  post:
+     *    parameters:
+     *    - in: body
+     *      schema:
+     *        type: object
+     *        required:
+     *          - name
+     *        properties:
+     *          name:
+     *            type: string
+     *            example: "Kinthil"
+     *    description: This API will create new user data.
+     *    responses:
+     *      200:
+     *        description: This API will return the exact same from your request
+     *        schema:
+     *          type: object
+     *          properties:
+     *            name:
+     *              type: string
+     *              example: "Kinthil"
      */
     app.post('/user', async (request: Request, response: Response) => {
         const newUser: User = await this.handler.createUserHandler(

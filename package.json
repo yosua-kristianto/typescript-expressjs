@@ -13,11 +13,11 @@
     "migrate": "npx sequelize db:migrate",
     "migrate:rollback": "npx sequelize db:migrate:undo",
     "migrate:rollback:all": "npx sequelize db:migrate:undo:all",
-    "migrate:refresh": "npx sequelize db:drop & npx sequelize db:create & npx sequelize db:migrate",
+    "migrate:refresh": "npx sequelize db:drop; npx sequelize db:create; npx sequelize db:migrate",
     "seed": "npx seed:all",
-    "seed:refresh": "npm run migrate:refresh & npm run seed",
-    "deploy:production": "npm run migrate & npm run build & npm run start",
-    "deploy:production:dummies": "npm run migrate:refresh & npm run seed & npm run build & npm run start"
+    "seed:refresh": "npm run migrate:refresh; npm run seed",
+    "deploy:production": "npm run migrate; npm run build; npm run start",
+    "deploy:production:dummies": "npm run migrate:refresh; npm run seed; npm run build; npm run start"
   },
   "author": "",
   "license": "ISC",

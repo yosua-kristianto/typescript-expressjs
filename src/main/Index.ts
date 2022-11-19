@@ -3,14 +3,14 @@ dotenv.config();
 
 import express, { Request, Response, NextFunction } from 'express';
 
-import 'express-async-errors'; 
+import 'express-async-errors';
 
 import config from './config/Config';
 import { Log } from './config/Logging';
 
 import { BaseResponse } from './model/dto/BaseResponse';
 
-const app = express.Router();
+const router = express.Router();
 
 /**
  * @var string NAMESPACE
@@ -43,8 +43,8 @@ Session ${new Date()}
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
- import "./config/EloquentTandingan";
- import { handleError } from './config/Exception';
+ import "./config/DBFacade";
+ import {ErrorHandler, handleError} from './config/Exception';
 
 
 /*
@@ -66,7 +66,7 @@ import middleware from './api/middleware/Middleware';
  * Loop trough ./api/middleware/middleware.ts
  */
 middleware.forEach((e) => {
-  app.use(e);
+  router.use(e);
 });
 
 
@@ -85,7 +85,7 @@ import SwaggerOption from "../resources/swagger/SwaggerOption";
 if(!["production"].includes(process.env.APP_ENV!) && process.env.SWAGGER_ENABLE! == "true"){
   const specs = swaggerJsDoc(SwaggerOption);
 
-  app.use(
+  router.use(
     "/api-docs",
     swaggerUi.serve,
     swaggerUi.setup(specs)
@@ -107,7 +107,7 @@ if(!["production"].includes(process.env.APP_ENV!) && process.env.SWAGGER_ENABLE!
 */
 
 import routes from './routes/RouteManagement';
-app.use('/api', routes);
+router.use('/api', routes);
 
 /*
 |--------------------------------------------------------------------------
@@ -118,9 +118,9 @@ app.use('/api', routes);
 | automatically. Feel free to change the behavior.
 |
 */
-app.use((error: any, request: Request, response: Response, next: NextFunction) => {
+router.use((error: ErrorHandler, request: Request, response: Response, next: NextFunction) => {
 
-  console.log(error);
+  console.log("Heho: "+ error);
 
   if(error){
     handleError(response, error);
@@ -130,7 +130,7 @@ app.use((error: any, request: Request, response: Response, next: NextFunction) =
 
 });
 
-app.use((error: any, response: Response) => response.status(404).json(BaseResponse.custom(false, "404", "Not Found", null)));
+router.use((error: any, response: Response) => response.status(404).json(BaseResponse.custom(false, "404", "Not Found", null)));
 
 
 /*
@@ -140,6 +140,7 @@ app.use((error: any, response: Response) => response.status(404).json(BaseRespon
 |
 | @since November, 19th 2022
 | The main server now using @fastify/express engine.
+| Enjoy! :)
 |
 | The main entry point for the lopping event listener for 
 | Node JS to interact with incoming requests.
@@ -148,14 +149,15 @@ app.use((error: any, response: Response) => response.status(404).json(BaseRespon
 |
 */
 
-const fastify = require('fastify')();
+const app = require('fastify')();
 
-fastify.register(require("@fastify/express"))
+app.register(require("@fastify/express"))
     .after(() => {
-        fastify.use(express.json());
-        fastify.use(express.urlencoded({extended: true}))
+        app.use(express.json());
+        app.use(express.urlencoded({extended: true}));
+        app.use(router);
     })
 
-fastify.listen({"port": config.server.port}, () => {
+app.listen({"port": config.server.port}, () => {
   Log.i(NAMESPACE, `Server is running on ${config.server.port}`);
 });

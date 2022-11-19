@@ -33,7 +33,6 @@ export default {
   database: {
 
     main: {
-      connection: "main",
       dialect   : (process.env.DB_CONNECTION ?? "postgres") as Dialect,
       uri       : process.env.DB_HOSTNAME ?? "127.0.0.1",
       port      : parseInt(process.env.DB_PORT ?? "5432"),

@@ -5,6 +5,7 @@ import ExampleValidation from '../../common/validation/ExampleValidation';
 import AdditionParamsRequestValidation from "../../common/validation/example/AdditionParamsRequestValidation";
 import ExampleAgeInputRequestValidation from "../../common/validation/example/ExampleAgeInputRequestValidation";
 import {ExampleControllerHandler} from "../../handler/ExampleControllerHandler";
+import DBFacade, {DB} from "../../config/DBFacade";
 
 const app = express.Router();
 
@@ -123,6 +124,42 @@ class ExampleController extends Controller {
 
       return BaseResponse.ok(
         (new ExampleControllerHandler().ageValidation(request.body.age)),
+        "Success",
+        response
+      );
+    });
+
+    app.post("/sample-knex", async (request: Request, response: Response) => {
+
+      return BaseResponse.ok(
+        (await DBFacade("uma_tbl_user").select('*')),
+        "Success",
+        response
+      );
+    });
+
+    app.post("/sample-sequelize", async (request: Request, response: Response) => {
+
+      return BaseResponse.ok(
+        (await DBFacade.query("SELECT * FROM `uma_tbl_user`"))[0],
+        "Success",
+        response
+      );
+    });
+
+    app.post("/sample-db2", async (request: Request, response: Response) => {
+
+      return BaseResponse.ok(
+        (await DB.connection('secondary').query("SELECT * FROM `table_name`"))[0],
+        "Success",
+        response
+      );
+    });
+
+    app.post("/sample-db3", async (request: Request, response: Response) => {
+
+      return BaseResponse.ok(
+        (await DB.connection('third_connection')('table_name').select('*')),
         "Success",
         response
       );

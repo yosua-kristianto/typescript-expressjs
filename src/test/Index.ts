@@ -1,5 +1,7 @@
 // Make sure to put any pre-condition to make sure your application is running well in here
-import '../main/config/Database';
+import {Database} from "../main/config/Database ";
+import EloquentTandingan from "../main/config/EloquentTandingan";
+Database();
 
 /**
  * WRITING TEST
@@ -8,8 +10,7 @@ import '../main/config/Database';
  */
 
 async function main() {
-  await require("./ExampleTest");
-  await require("./UserTest");
+    console.log(await EloquentTandingan('po_uma.uma_tbl_users').select('*'))
 }
 
 main().then(() => { console.log("Testing Done. Use CTRL+C or COMMAND+C to close this test run.") });

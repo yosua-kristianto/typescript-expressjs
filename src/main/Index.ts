@@ -10,12 +10,7 @@ import { Log } from './config/Logging';
 
 import { BaseResponse } from './model/dto/BaseResponse';
 
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({
-  extended: true
-}));
+const app = express.Router();
 
 /**
  * @var string NAMESPACE
@@ -48,7 +43,7 @@ Session ${new Date()}
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
- import "./config/Database";
+ import "./config/EloquentTandingan";
  import { handleError } from './config/Exception';
 
 
@@ -143,6 +138,9 @@ app.use((error: any, response: Response) => response.status(404).json(BaseRespon
 | Request Listener / Run The Application
 |--------------------------------------------------------------------------
 |
+| @since November, 19th 2022
+| The main server now using @fastify/express engine.
+|
 | The main entry point for the lopping event listener for 
 | Node JS to interact with incoming requests.
 | Enjoy changing this configuration, but don't forget to
@@ -150,6 +148,14 @@ app.use((error: any, response: Response) => response.status(404).json(BaseRespon
 |
 */
 
-app.listen(config.server.port, () => {
+const fastify = require('fastify')();
+
+fastify.register(require("@fastify/express"))
+    .after(() => {
+        fastify.use(express.json());
+        fastify.use(express.urlencoded({extended: true}))
+    })
+
+fastify.listen({"port": config.server.port}, () => {
   Log.i(NAMESPACE, `Server is running on ${config.server.port}`);
 });

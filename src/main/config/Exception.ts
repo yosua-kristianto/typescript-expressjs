@@ -16,6 +16,10 @@ export class ErrorHandler extends Error {
   data?: any;
 
   constructor(statusCode: string, message: string, data?: any) {
+    if(statusCode == "undefined"){
+      message =  ((process.env.APP_DEBUG ?? "false") == "true") ? message : "Internal Server Error";
+    }
+
     super();
     this.statusCode = statusCode;
     this.message = message;
@@ -31,15 +35,15 @@ export class ErrorHandler extends Error {
 /**
  * This is where error being returned as response.
  */
-export const handleError = (res: Response, err: any): Response => {
+export const handleError = (res: Response, err: ErrorHandler): Response => {
   Log.e("Unhandled Exception", JSON.stringify(err.stack));
   const { statusCode, message, data } = err;
 
   return BaseResponse.error(
-    message,
+    ((process.env.APP_DEBUG ?? "false") == "true" && statusCode != "undefined") ? message : "Internal Server Error",
     res,
     statusCode,
-    data
+    (process.env.APP_DEBUG ?? "false") == "true" ? data : null
   );
 }
 

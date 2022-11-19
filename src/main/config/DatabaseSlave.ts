@@ -25,6 +25,37 @@ export class DatabaseDriver {
     private configuration: DatabaseConnectionSetup;
     private readonly selectedDriver: string;
 
+    /**
+     * driverSynonym
+     *
+     * This function is in response of the error that caused by knex
+     * driver which treat 'mysql' as 'mysql' and not 'mysql2'.
+     *
+     * The 'mysql' driver simply cannot take data from MySQL 8 for some reason.
+     * See the link for more information
+     *
+     * @link https://github.com/knex/knex/issues/3233#issuecomment-988579036
+     *
+     * @private
+     */
+    private driverSynonym(): Dialect | string {
+        let synonym: Dialect | string = this.configuration.dialect;
+
+        switch (this.selectedDriver){
+            case "knex":
+                if(this.configuration.dialect == 'mysql') {
+                    synonym = 'mysql2';
+                }
+
+                break;
+
+            case "sequelize":
+            default:
+        }
+
+        return synonym;
+    }
+
     public constructor(driver: string, setup: DatabaseConnectionSetup) {
         if(this.availableDriver.indexOf(driver) == -1){
             throw new Error(`Database with selected driver ${driver}) is not found!`);
@@ -34,6 +65,12 @@ export class DatabaseDriver {
         this.configuration = setup;
     }
 
+    /**
+     * authenticate
+     *
+     * This function will start the authentication system whatever you choose Sequelize or Knex.
+     * Once the return statement being made, the returned value is the database driver settings loaded.
+     */
     public authenticate(): any {
         let connection: any = null;
 
@@ -56,36 +93,37 @@ export class DatabaseDriver {
                 sequelize
                     .authenticate()
                     .then(async () => {
-                        Log.d(NAMESPACE, `Connection to ${this.configuration.database} has been established.`);
+                        Log.d(NAMESPACE, `[SEQUELIZE DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
                     })
                     .catch(error => {
-                        Log.e(NAMESPACE, `Connection to ${this.configuration.database} cannot be established: ${error}`);
+                        Log.e(NAMESPACE, `[SEQUELIZE DRIVER (${this.selectedDriver})] to ${this.configuration.database} cannot be established: ${error}`);
                     });
 
                 connection = sequelize;
                 break;
 
             case "knex":
-                connection = Knex({
-                    "client": this.configuration.dialect.toString(),
-                    "connection": {
-                        "host": this.configuration.host,
-                        "port": this.configuration.port,
-                        "user": this.configuration.username,
-                        "password": this.configuration.password,
-                        "database": this.configuration.database
-                    },
-                    "pool": {
-                        "min": 0,
-                        "max": 7
-                    }
-                });
+                try{
+                    connection = Knex({
+                        "client": this.driverSynonym(),
+                        "connection": {
+                            "host": this.configuration.host,
+                            "port": this.configuration.port,
+                            "user": this.configuration.username,
+                            "password": this.configuration.password,
+                            "database": this.configuration.database
+                        },
+                        "pool": {
+                            "min": 0,
+                            "max": 7
+                        }
+                    });
 
-                connection().on( 'query', function( queryData: string ) {
-                    console.log( "Executed query: " + queryData );
-                });
+                    Log.d(NAMESPACE, `[KNEX DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
+                }catch(error){
+                    Log.d(NAMESPACE, `[KNEX DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} cannot be established: ${error}`);
+                }
 
-                Log.d(NAMESPACE, `Connection to ${this.configuration.database} has been established.`);
 
                 break;
         }
@@ -94,9 +132,26 @@ export class DatabaseDriver {
     }
 }
 
-export const Database = (connection: string = "main"): any => {
+/**
+ * DatabaseSlave
+ *
+ * This function will return Slave that has been loaded with ORM Driver configuration.
+ * 1 DatabaseSlave represent one Database Connection.
+ *
+ * The slave will only make a pool into enabled connection.
+ * See config.database
+ *
+ * @param connection
+ * @constructor
+ */
+export const DatabaseSlave = (connection: string = "main"): any => {
     type DatabaseConnectionObject = keyof typeof config.database;
     const selection = connection as DatabaseConnectionObject;
+
+    if(!config.database[selection].enable){
+        throw new Error(`WARNING: Connection ${connection} is not enabled!`);
+    }
+
     return new DatabaseDriver(
             config.database[selection].orm_driver as string,
             {

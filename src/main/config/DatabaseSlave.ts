@@ -2,7 +2,7 @@ import Knex from "knex";
 import config from './Config';
 import { Log } from './Logging';
 import path from 'path';
-import {Sequelize} from "sequelize-typescript";
+import {Sequelize, SequelizeOptions} from "sequelize-typescript";
 import {Dialect} from "sequelize";
 
 const NAMESPACE: string = "DATABASE";
@@ -13,7 +13,8 @@ interface DatabaseConnectionSetup {
     "password": string,
     "host": string,
     "dialect": Dialect,
-    "port": number
+    "port": number,
+    "model_folder": string
 }
 
 export class DatabaseDriver {
@@ -50,6 +51,9 @@ export class DatabaseDriver {
                 break;
 
             case "sequelize":
+                // if(this.configuration.dialect == 'mssql'){
+                //     synonym = 
+                // }
             default:
         }
 
@@ -76,18 +80,31 @@ export class DatabaseDriver {
 
         switch(this.selectedDriver){
             case "sequelize":
-                let sequelize: Sequelize = new Sequelize(
-                        this.configuration.database,
-                        this.configuration.username,
-                        this.configuration.password,
-                        {
-                            "host"        : this.configuration.host,
-                            "dialect"     : this.configuration.dialect,
-                            "port"        : this.configuration.port,
-                            // "logging"     : (... msg) => console.log(msg),
-                            // "logging"     : false
-                            "models"      : [path.join(__dirname, "../model/entity")]
+
+                let sequelize: Sequelize;
+                const sequelizeOption: SequelizeOptions = {
+                    "host"        : this.configuration.host,
+                    "dialect"     : this.configuration.dialect,
+                    "port"        : this.configuration.port,
+                    // "logging"     : (... msg) => console.log(msg),
+                    "logging"     : false,
+                    "models"      : [path.join(__dirname, this.configuration.model_folder)]
+                };
+                
+                if(this.configuration.dialect === 'mssql'){
+                    Object.assign(sequelizeOption, {
+                        "dialectOptions": {
+                            "trustServerCertificate": true,
+                            "trustedConnection": true,
+                            "encrypt": true,
                         }
+                    })
+                }
+                sequelize = new Sequelize(
+                    this.configuration.database,
+                    this.configuration.username,
+                    this.configuration.password,
+                    sequelizeOption
                 );
 
                 sequelize
@@ -160,7 +177,8 @@ export const DatabaseSlave = (connection: string = "main"): any => {
                 "password": config.database[selection].password as string,
                 "host": config.database[selection].uri as string,
                 "port": config.database[selection].port as number,
-                "dialect": config.database[selection].dialect as Dialect
+                "dialect": config.database[selection].dialect as Dialect,
+                "model_folder": config.database[selection].model_folder as string
             }
     ).authenticate();
 }

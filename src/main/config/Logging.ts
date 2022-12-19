@@ -12,9 +12,11 @@ export class Log {
   private static getTimeStamp = (): string => new Date().toISOString();
 
   private static getDate(): string {
-    const date: any = new Date();
+    const dateObj: any = new Date();
+    const date = (dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate());
+    const month = (dateObj.getMonth() + 1 < 10 ? `0${dateObj.getMonth() + 1}` : dateObj.getMonth() + 1);
 
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    return `$${dateObj.getFullYear()}-${month}-${date}`;
   }
 
   /**

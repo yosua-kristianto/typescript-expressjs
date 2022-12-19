@@ -13,19 +13,20 @@ const route = express.Router();
 | with PascalCase.
 |
 */
+import ExampleController from "../api/example/ExampleController";
+import UserController from "../api/user/UserController";
+import CustomerController from '../api/customer/CustomerController';
 
-import ExampleController from '../api/controller/ExampleController';
-import UserController from '../api/controller/UserController';
-
-// Register your Controller in here
+// Register your BaseController in here
 route.use(ExampleController);
 route.use(UserController);
+route.use(CustomerController);
 
 /**
  * API root point. Just to make sure the API is okay.
  */
  import config from '../config/Config';
- 
+
  route.get('/', (req, res) => {
    const date = new Date();  
    

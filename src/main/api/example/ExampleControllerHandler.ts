@@ -1,4 +1,4 @@
-import {ExampleAgeBelowEightTeenException} from "../common/exception/example/ExampleAgeBelowEightTeenException";
+import {ExampleAgeBelowEightTeenException} from "../../common/exception/example/ExampleAgeBelowEightTeenException";
 
 export class ExampleControllerHandler {
 

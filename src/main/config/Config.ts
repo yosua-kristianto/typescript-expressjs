@@ -33,36 +33,15 @@ export default {
   database: {
 
     main: {
-      dialect   : (process.env.DB_CONNECTION ?? "postgres") as Dialect,
-      uri       : process.env.DB_HOSTNAME ?? "127.0.0.1",
-      port      : parseInt(process.env.DB_PORT ?? "5432"),
-      database  : process.env.DB_DATABASE ?? '',
-      username  : process.env.DB_USERNAME ?? 'root',
-      password  : process.env.DB_PASSWORD ?? '',
-      orm_driver: process.env.DB_ORM_DRIVER ?? 'sequelize',
-      enable    : true
-    },
-
-    secondary: {
-      dialect   : (process.env.DB2_CONNECTION ?? "postgres") as Dialect,
-      uri       : process.env.DB2_HOSTNAME ?? "127.0.0.1",
-      port      : parseInt(process.env.DB2_PORT ?? "5432"),
-      database  : process.env.DB2_DATABASE ?? '',
-      username  : process.env.DB2_USERNAME ?? 'root',
-      password  : process.env.DB2_PASSWORD ?? '',
-      orm_driver: process.env.DB2_ORM_DRIVER ?? 'sequelize',
-      enable    : false
-    },
-
-    third_connection: {
-      dialect   : (process.env.DB3_CONNECTION ?? "mysql") as Dialect,
-      uri       : process.env.DB3_HOSTNAME ?? "127.0.0.1",
-      port      : parseInt(process.env.DB3_PORT ?? "5432"),
-      database  : process.env.DB3_DATABASE ?? '',
-      username  : process.env.DB3_USERNAME ?? 'root',
-      password  : process.env.DB3_PASSWORD ?? '',
-      orm_driver: process.env.DB3_ORM_DRIVER ?? 'sequelize',
-      enable    : false
+      "dialect"   : (process.env.DB_CONNECTION ?? "postgres") as Dialect,
+      "uri"       : process.env.DB_HOSTNAME ?? "127.0.0.1",
+      "port"      : parseInt(process.env.DB_PORT ?? "5432"),
+      "database"  : process.env.DB_DATABASE ?? '',
+      "username"  : process.env.DB_USERNAME ?? 'root',
+      "password"  : process.env.DB_PASSWORD ?? '',
+      "orm_driver": process.env.DB_ORM_DRIVER ?? 'sequelize',
+      "model_folder": process.env.DB_MODEL_PATH ?? '../model/entity',
+      "enable"    : true
     }
 
   }

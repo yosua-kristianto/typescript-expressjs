@@ -60,7 +60,7 @@ Session ${new Date()}
 |
 */
 
-import middleware from './api/middleware/Middleware';
+import middleware from './common/middleware/Middleware';
 
 /**
  * Loop trough ./api/middleware/middleware.ts

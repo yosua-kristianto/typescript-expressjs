@@ -3,7 +3,7 @@
  *
  * You can specify every unit Tests in here.
  */
-import {ExampleControllerHandler} from "../main/handler/ExampleControllerHandler";
+import { ExampleControllerHandler } from "../main/api/example/ExampleControllerHandler";
 import {ExampleAgeBelowEightTeenException} from "../main/common/exception/example/ExampleAgeBelowEightTeenException";
 
 test("[POSITIVE] Should be return true when given 19", () => {

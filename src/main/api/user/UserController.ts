@@ -1,6 +1,6 @@
-import { BaseController } from '../BaseController';
-import express, { Request, Response } from 'express';
-import { BaseResponse } from '../../model/dto/BaseResponse';
+import {BaseController} from '../BaseController';
+import express, {Request, Response} from 'express';
+import {BaseResponse} from '../../model/dto/BaseResponse';
 import User from '../../model/entity/User';
 import {UserHandler} from "./UserControllerHandler";
 

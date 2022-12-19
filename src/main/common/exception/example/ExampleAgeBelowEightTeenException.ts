@@ -1,4 +1,4 @@
-import { ErrorHandler } from '../../../config/Exception';
+import {ErrorHandler} from '../../../config/Exception';
 
 export class ExampleAgeBelowEightTeenException extends ErrorHandler {
 

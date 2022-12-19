@@ -1,5 +1,5 @@
-import { DataTypes } from 'sequelize';
-import { Model, Column, Table, Default } from 'sequelize-typescript';
+import {DataTypes} from 'sequelize';
+import {Column, Model, Table} from 'sequelize-typescript';
 
 @Table({
     tableName    : '[dbo].[Customer]',

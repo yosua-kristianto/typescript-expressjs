@@ -1,13 +1,11 @@
-import { BaseController } from '../BaseController';
-import express, { Request, Response } from 'express';
-import { BaseResponse } from '../../model/dto/BaseResponse';
+import {BaseController} from '../BaseController';
+import express, {Request, Response} from 'express';
+import {BaseResponse} from '../../model/dto/BaseResponse';
 import ExampleValidation from '../../common/validation/ExampleValidation';
 import AdditionParamsRequestValidation from "../../common/validation/example/AdditionParamsRequestValidation";
 import ExampleAgeInputRequestValidation from "../../common/validation/example/ExampleAgeInputRequestValidation";
 import {ExampleControllerHandler} from "./ExampleControllerHandler";
-import { DB } from '../../config/DBFacade';
-import PatientHistory from "../../model/entity/patient.trx/PatientHistory";
-import {Op} from "sequelize";
+import {DB} from '../../config/DBFacade';
 
 const app = express.Router();
 

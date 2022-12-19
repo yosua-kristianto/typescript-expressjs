@@ -1,14 +1,39 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
-import express, { Request, Response, NextFunction } from 'express';
+import express, {NextFunction, Request, Response} from 'express';
 
 import 'express-async-errors';
 
 import config from './config/Config';
-import { Log } from './config/Logging';
+import {Log} from './config/Logging';
 
-import { BaseResponse } from './model/dto/BaseResponse';
+import {BaseResponse} from './model/dto/BaseResponse';
+/**
+ * Process watcher
+ *  Make sure you don't fuck with `logging.ts`'s log file path.
+ */
+import "./config/DBFacade";
+import {ErrorHandler, handleError} from './config/Exception';
+
+
+/*
+|--------------------------------------------------------------------------
+| Middleware Part
+|--------------------------------------------------------------------------
+|
+| Here is where you can register middlewares for your application.
+| These middlewares are loaded in api/middleware folder.
+| However, you can also register new middleware by adding new one below.
+| For best practice reason, please read about Bounded Context approach
+| to make sure this project tides up.
+|
+*/
+import middleware from './common/middleware/Middleware';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJsDoc from 'swagger-jsdoc';
+import SwaggerOption from "../resources/swagger/SwaggerOption";
+import routes from './routes/RouteManagement';
+
+dotenv.config();
 
 const router = express.Router();
 
@@ -39,28 +64,6 @@ Session ${new Date()}
 
 `);
 
-/**
- * Process watcher
- *  Make sure you don't fuck with `logging.ts`'s log file path.
- */
- import "./config/DBFacade";
- import {ErrorHandler, handleError} from './config/Exception';
-
-
-/*
-|--------------------------------------------------------------------------
-| Middleware Part
-|--------------------------------------------------------------------------
-|
-| Here is where you can register middlewares for your application. 
-| These middlewares are loaded in api/middleware folder. 
-| However, you can also register new middleware by adding new one below.
-| For best practice reason, please read about Bounded Context approach 
-| to make sure this project tides up.
-|
-*/
-
-import middleware from './common/middleware/Middleware';
 
 /**
  * Loop trough ./api/middleware/middleware.ts
@@ -77,10 +80,6 @@ middleware.forEach((e) => {
 |
 | Here is where you can configure Swagger-UI.
 */
-
-import swaggerUi from 'swagger-ui-express';
-import swaggerJsDoc from 'swagger-jsdoc';
-import SwaggerOption from "../resources/swagger/SwaggerOption";
 
 if(!["production"].includes(process.env.APP_ENV!) && process.env.SWAGGER_ENABLE! == "true"){
   const specs = swaggerJsDoc(SwaggerOption);
@@ -105,8 +104,6 @@ if(!["production"].includes(process.env.APP_ENV!) && process.env.SWAGGER_ENABLE!
 | This is why I choose Typescript in first place.
 |
 */
-
-import routes from './routes/RouteManagement';
 router.use('/api', routes);
 
 /*

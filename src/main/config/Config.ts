@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import {Dialect} from 'sequelize';
 
-import { Dialect } from 'sequelize';
+dotenv.config();
 
 export default {
   /*

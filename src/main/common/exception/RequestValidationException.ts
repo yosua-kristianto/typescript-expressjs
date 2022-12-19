@@ -1,5 +1,5 @@
 import {ValidationError} from "express-validator";
-import { ErrorHandler } from "../../config/Exception";
+import {ErrorHandler} from "../../config/Exception";
 
 export default class RequestValidationException extends ErrorHandler {
 

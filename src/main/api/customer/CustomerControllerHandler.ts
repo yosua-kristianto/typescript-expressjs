@@ -1,6 +1,3 @@
-import User from "../../model/entity/User";
-import {CreateUserDTO} from "../../model/dto/request/CreateUserDTO";
-import UserRepositoryImpl from "../../repository/impl/UserRepositoryImpl";
 import Customer from "../../model/entity/Customer";
 
 export class CustomerControllerHandler {

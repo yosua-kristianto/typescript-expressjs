@@ -1,6 +1,6 @@
 import Knex from "knex";
 import config from './Config';
-import { Log } from './Logging';
+import {Log} from './Logging';
 import path from 'path';
 import {Sequelize, SequelizeOptions} from "sequelize-typescript";
 import {Dialect} from "sequelize";
@@ -110,10 +110,10 @@ export class DatabaseDriver {
                 sequelize
                     .authenticate()
                     .then(async () => {
-                        Log.d(NAMESPACE, `[SEQUELIZE DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
+                        Log.d(NAMESPACE, `[ORM DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
                     })
                     .catch(error => {
-                        Log.e(NAMESPACE, `[SEQUELIZE DRIVER (${this.selectedDriver})] to ${this.configuration.database} cannot be established: ${error}`);
+                        Log.e(NAMESPACE, `[ORM DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} cannot be established: ${error}`);
                     });
 
                 connection = sequelize;

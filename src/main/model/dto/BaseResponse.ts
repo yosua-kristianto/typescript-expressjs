@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import {Response} from 'express';
 
 export class BaseResponse {
   public status: boolean = false;

@@ -1,6 +1,6 @@
-import { validationResult } from "express-validator";
+import {validationResult} from "express-validator";
 import RequestValidationException from "../common/exception/RequestValidationException";
-import express, {Request} from "express";
+import {Request} from "express";
 
 export abstract class BaseController {
   

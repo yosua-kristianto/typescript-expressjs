@@ -1,8 +1,8 @@
 import process from "process";
-import { Log } from "./Logging";
+import {Log} from "./Logging";
 
-import { Response } from 'express';
-import { BaseResponse } from '../model/dto/BaseResponse';
+import {Response} from 'express';
+import {BaseResponse} from '../model/dto/BaseResponse';
 
 /**
  * ErrorHandler

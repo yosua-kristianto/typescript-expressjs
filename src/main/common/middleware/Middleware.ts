@@ -16,7 +16,6 @@
 import cors from './Cors';
 
 
-
 /**
  * @var array 
  * Middleware Order Setting

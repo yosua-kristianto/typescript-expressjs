@@ -1,8 +1,8 @@
-import {BaseController} from '../BaseController';
 import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../model/dto/BaseResponse';
 import User from '../../model/entity/User';
 import {UserHandler} from "./UserControllerHandler";
+import {BaseController} from "cuakx-core-framework/src/main/facade/http/request/BaseController";
+import {BaseResponse} from "cuakx-core-framework/src/main/facade/http/response/BaseResponse";
 
 const app = express.Router();
 

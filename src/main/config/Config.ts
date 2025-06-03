@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import path from 'path';
 import {Dialect} from 'sequelize';
 
 dotenv.config();
@@ -15,7 +16,7 @@ export default {
   */
   server: {
     hostname  : process.env.SERVER_HOSTNAME ?? 'localhost',
-    port      : process.env.SERVER_PORT ?? 57898,
+    port      : process.env.SERVER_PORT ?? "57898",
     app       : process.env.APP_NAME ?? 'My App',
     env       : process.env.APP_ENV ?? 'production'
   },
@@ -32,18 +33,47 @@ export default {
   */
   database: {
 
-    main: {
-      "dialect"   : (process.env.DB_CONNECTION ?? "postgres") as Dialect,
-      "uri"       : process.env.DB_HOSTNAME ?? "127.0.0.1",
-      "port"      : parseInt(process.env.DB_PORT ?? "5432"),
-      "database"  : process.env.DB_DATABASE ?? '',
-      "username"  : process.env.DB_USERNAME ?? 'root',
-      "password"  : process.env.DB_PASSWORD ?? '',
+    "main": {
+      "dialect"   : (process.env.DB_MAIN_CONNECTION ?? "mssql") as Dialect,
+      "uri"       : process.env.DB_MAIN_HOSTNAME ?? "127.0.0.1",
+      "port"      : parseInt(process.env.DB_MAIN_PORT ?? "1433"),
+      "database"  : process.env.DB_MAIN_DATABASE ?? '',
+      "username"  : process.env.DB_MAIN_USERNAME ?? 'sa',
+      "password"  : process.env.DB_MAIN_PASSWORD ?? 'root',
       "orm_driver": process.env.DB_ORM_DRIVER ?? 'sequelize',
-      "model_folder": process.env.DB_MODEL_PATH ?? '../model/entity',
+      "path"      : [ path.join(__dirname, "../model/entity/main") ],
       "enable"    : true
-    }
+    },
 
+  },
+
+  "memcache": {
+    "main": {
+      "host": process.env.REDIS_MAIN_HOSTNAME ?? 'localhost',
+      "port": parseInt(process.env.REDIS_MAIN_PORT ?? '6379'),
+      "db_cluster": parseInt(process.env.REDIS_MAIN_DB_CLUSTER ?? '0'),
+      "family": parseInt(process.env.REDIS_MAIN_IP_VERSION ?? '4'),
+      "password": process.env.REDIS_MAIN_PASSWORD ?? 'root',
+      "enable": false
+    }
+  },
+
+  "messaging": {
+    "main": {
+      "connection_string": process.env.RABBITMQ_CONNECTION_STRING_MAIN ?? 'amqp://10.1.12.71:5672',
+      "enable": true
+    }
+  },
+
+  "mongod": {
+    "main": {
+      "host"      : process.env.MONGODB_HOSTNAME ?? "127.0.0.1",
+      "port"      : parseInt(process.env.MONGODB_PORT ?? "27017"),
+      "database"  : process.env.MONGODB_DATABASE ?? '',
+      "username"  : process.env.MONGODB_USERNAME ?? '',
+      "password"  : process.env.MONGODB_PASSWORD ?? '',
+      "enable"   : true
+    },
   }
   
 }

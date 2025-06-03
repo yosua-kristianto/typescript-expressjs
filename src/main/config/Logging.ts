@@ -27,8 +27,8 @@ export class Log {
    */
   private static writeLog(str: string): void {
     
-    const currentFileName: string = `./logs/${Log.getDate()}.log`;
-    const logFormat: string = `${str}\n`;
+    const currentFileName = `./logs/${Log.getDate()}.log`;
+    const logFormat = `${str}\n`;
 
     fs.appendFile(currentFileName, logFormat, (appendError: any) => {
       if(appendError) {
@@ -50,7 +50,7 @@ export class Log {
    *   an informative message.
    */
   static i(namespace: string, message: string, object?: any): void {
-    let generatedLog = `[${Log.getTimeStamp()}] [INFO] [${namespace}] ${message}`;
+    const generatedLog = `[${Log.getTimeStamp()}] [INFO] [${namespace}] ${message}`;
 
     if(object) {
   
@@ -71,7 +71,7 @@ export class Log {
    *   an debug message.
    */
   static d(namespace: string, message: string, object?: any): void {
-     let generatedLog = `[${Log.getTimeStamp()}] [DEBUG] [${namespace}] ${message}`;  
+     const generatedLog = `[${Log.getTimeStamp()}] [DEBUG] [${namespace}] ${message}`;  
 
      if(object) {
    
@@ -92,7 +92,7 @@ export class Log {
    *   an error message.
    */
    static e(namespace: string, message: string, object?: any): void {
-    let generatedLog = `[${Log.getTimeStamp()}] [ERROR] [${namespace}] ${message}`;  
+    const generatedLog = `[${Log.getTimeStamp()}] [ERROR] [${namespace}] ${message}`;  
     
     if(object) {
   
@@ -113,7 +113,7 @@ export class Log {
    *   an warning message.
    */
    static w(namespace: string, message: string, object?: any): void {
-    let generatedLog = `[${Log.getTimeStamp()}] [WARNING] [${namespace}] ${message}`;  
+    const generatedLog = `[${Log.getTimeStamp()}] [WARNING] [${namespace}] ${message}`;  
     
     if(object) {
   

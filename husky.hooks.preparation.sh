@@ -1,0 +1,10 @@
+echo "Reinstalling Husky";
+npm uninstall husky;
+npm install husky;
+echo "Preparing Husky";
+npm pkg set scripts.prepare="husky install";
+npm run prepare;
+echo "Preparing done";
+echo "Registering husky pre-push hooks";
+npx husky add .husky/pre-push "npx eslint ./src/main/*";
+echo "Husky pre-push git hooks setup process done.";

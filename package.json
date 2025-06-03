@@ -1,7 +1,7 @@
 {
-  "name": "typescript-node",
-  "version": "1.0.0",
-  "description": "",
+  "name": "cuakx-express",
+  "version": "2.1.1",
+  "description": "Cuakx Express is a highly structured and extensible backend boilerplate for modern backend services.",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/main/Index.ts",

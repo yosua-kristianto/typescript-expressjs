@@ -14,6 +14,7 @@
  * CORS Setting
  */
 import cors from './Cors';
+// import AccessTokenGuard from "./AccessTokenGuard";
 
 
 /**
@@ -21,5 +22,6 @@ import cors from './Cors';
  * Middleware Order Setting
  */
 export default [
-  cors
+  cors,
+  // AccessTokenGuard
 ];

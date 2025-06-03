@@ -5,14 +5,6 @@ import {Request} from "express";
 export abstract class BaseController {
   
   /**
-   * This is empty
-   */
-  protected doSomething(): void {
-    
-  }
-
-  
-  /**
    * requestValidator
    * 
    * This function is an extract method to make sure

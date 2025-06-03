@@ -38,25 +38,25 @@ It includes native integrations with:
 ## 📁 Project Structure
 
 .
-├── main/ # Source code
-│ ├── main.api/ # Business logic (Modular structure: each has controller + handler)
-│ ├── main.common/ # Reusable modules
-│ │ ├── exception/ # Custom exceptions
-│ │ ├── facade/ # Facade helpers for integration logic
-│ │ ├── middleware/ # Express middleware
-│ │ └── validation/ # Express validation logic
-│ ├── main.config/ # Configurations for Redis, DB, Mongo, RabbitMQ, Logging
-│ ├── main.messaging/ # RabbitMQ publisher & consumer
-│ ├── main.model/ # Shared entity models for Redis, MongoDB, SQL
-│ ├── main.repository/ # Data access layer
-│ └── main.routes/ # Route registration
-├── resources/ # Swagger docs & Sequelize migrations
-├── test/ # Unit & contract tests (Jest)
-├── .eslintrc.js # ESLint config
-├── .prettierrc # Prettier config
-├── .husky/ # Git hook setup
-├── docker-compose.yml # Dev container orchestration
-└── Dockerfile # Runtime container definition
+├── main/ # Source code <br />
+│ ├── main.api/ # Business logic (Modular structure: each has controller + handler) <br />
+│ ├── main.common/ # Reusable modules <br />
+│ │ ├── exception/ # Custom exceptions <br />
+│ │ ├── facade/ # Facade helpers for integration logic <br />
+│ │ ├── middleware/ # Express middleware <br />
+│ │ └── validation/ # Express validation logic <br />
+│ ├── main.config/ # Configurations for Redis, DB, Mongo, RabbitMQ, Logging <br />
+│ ├── main.messaging/ # RabbitMQ publisher & consumer <br />
+│ ├── main.model/ # Shared entity models for Redis, MongoDB, SQL <br />
+│ ├── main.repository/ # Data access layer <br />
+│ └── main.routes/ # Route registration <br />
+├── resources/ # Swagger docs & Sequelize migrations <br />
+├── test/ # Unit & contract tests (Jest) <br />
+├── .eslintrc.js # ESLint config <br />
+├── .prettierrc # Prettier config <br />
+├── .husky/ # Git hook setup <br />
+├── docker-compose.yml # Dev container orchestration <br />
+└── Dockerfile # Runtime container definition <br />
 
 
 

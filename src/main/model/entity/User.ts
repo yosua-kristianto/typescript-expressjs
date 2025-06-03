@@ -80,8 +80,8 @@ class User extends Model implements UserItf {
    */
   toJSON () {
     // hide hidden fields
-    let attributes = Object.assign({}, this.get())
-    for (let a of this.hidden) {
+    const attributes = Object.assign({}, this.get())
+    for (const a of this.hidden) {
       delete attributes[a]
     }
     return attributes

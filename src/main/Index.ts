@@ -14,6 +14,13 @@ import {BaseResponse} from './model/dto/BaseResponse';
 import "./config/DBFacade";
 import {ErrorHandler, handleError} from './config/Exception';
 
+// Uncomment to enable Redis
+// import "./config/memcache/RedisFacade";
+
+// Uncomment to enable MongoDB Connection
+// import "./config/MongooseConfig";
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +47,8 @@ const router = express.Router();
 /**
  * @var string NAMESPACE
  */
-const NAMESPACE = 'Server';
+const NAMESPACE = 'ServerZ';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,18 +59,13 @@ const NAMESPACE = 'Server';
 | Feel free to change or update the configuration.
 |
 */
-
+import Banner from '../resources/banner/Banner';
 console.log(`
 Session ${new Date()}
- 
-   ________  _____    __ ___  __
-  / ____/ / / /   |  / //_/ |/ /
- / /   / / / / /| | / ,<  |   / 
-/ /___/ /_/ / ___ |/ /| |/   |  
-\\____/\\____/_/  |_/_/ |_/_/|_|  
-                                
 
+${Banner}
 `);
+
 
 
 /**
@@ -81,7 +84,7 @@ middleware.forEach((e) => {
 | Here is where you can configure Swagger-UI.
 */
 
-if(!["production"].includes(process.env.APP_ENV!) && process.env.SWAGGER_ENABLE! == "true"){
+if(!["production"].includes(process.env.APP_ENV ?? "production") && (process.env.SWAGGER_ENABLE ?? "false") == "true"){
   const specs = swaggerJsDoc(SwaggerOption);
 
   router.use(
@@ -117,7 +120,7 @@ router.use('/api', routes);
 */
 router.use((error: ErrorHandler, request: Request, response: Response, next: NextFunction) => {
 
-  console.log("Heho: "+ error);
+  console.log(error);
 
   if(error){
     handleError(response, error);
@@ -129,6 +132,17 @@ router.use((error: ErrorHandler, request: Request, response: Response, next: Nex
 
 router.use((error: any, response: Response) => response.status(404).json(BaseResponse.custom(false, "404", "Not Found", null)));
 
+/*
+ |--------------------------------------------------------------------------
+ | Register Message Brokers (RabbitMQ)
+ |--------------------------------------------------------------------------
+ |
+ | Register your message broker consumer in here, this section will be called
+ | automatically. Import the Consumer, or try to uncomment this line below, and run consume.
+ |
+ */
+// import { MessagingConsumer } from './messaging/puller/MessagingPuller';
+// MessagingConsumer.consume();
 
 /*
 |--------------------------------------------------------------------------
@@ -146,15 +160,21 @@ router.use((error: any, response: Response) => response.status(404).json(BaseRes
 |
 */
 
-const app = require('fastify')();
+import {fastify} from "fastify";
+import fastifyExpress from '@fastify/express';
 
-app.register(require("@fastify/express"))
+const app = fastify();
+
+app.register(fastifyExpress)
     .after(() => {
         app.use(express.json());
         app.use(express.urlencoded({extended: true}));
         app.use(router);
     })
 
-app.listen({"port": config.server.port}, () => {
+app.listen({
+  "port": parseInt(config.server.port),
+  "host": (process.env.APP_ENV ?? 'local') == 'local' ? '127.0.0.1' : '0.0.0.0'
+  }, () => {
   Log.i(NAMESPACE, `Server is running on ${config.server.port}`);
 });

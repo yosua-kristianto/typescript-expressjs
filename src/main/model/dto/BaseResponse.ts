@@ -1,16 +1,23 @@
 import {Response} from 'express';
 
 export class BaseResponse {
-  public status: boolean = false;
-  public code: string = "500";
-  public message: string = "Internal Server Error";
+  public status = false;
+  public code = "500";
+  public message = "Internal Server Error";
   public data!: any;
+
+  public constructor(code = "500", message = "") {
+    this.code = code;
+    this.message = message;
+    this.status = false;
+    this.data = null;
+  }
 
   /**
    * ok
    *  A static function that return BaseResponse as successful response.
    */
-  static ok(data: any, message: string, res: Response, code: string = "200"): Response {
+  static ok(data: any, message: string, res: Response, code = "200"): Response {
     const baseResponse = new BaseResponse();
 
     baseResponse.status = true;
@@ -19,10 +26,10 @@ export class BaseResponse {
     baseResponse.data = data || null;
 
     return res
-            .status(200)
-              .json((
-                baseResponse
-              ));
+      .status(200)
+      .json((
+        baseResponse
+      ));
   }
 
   /**
@@ -30,7 +37,7 @@ export class BaseResponse {
    *  A static function that return BaseResponse as not okay response.
    *  Oftenly used for Internal Server Error.
    */
-  static error(message: string, res: Response, code: string = "500", data?: any | null): Response {
+  static error(message: string, res: Response, code = "500", data?: any | null): Response {
     const baseResponse = new BaseResponse();
 
     baseResponse.status = false;
@@ -38,15 +45,11 @@ export class BaseResponse {
     baseResponse.message = message;
     baseResponse.data = data || null;
 
-    if (process.env.APP_DEBUG == "true") {
-      console.log(res);
-    }
-
     return res
-            .status(500)
-              .json((
-                baseResponse
-              ));
+      .status(500)
+      .json((
+        baseResponse
+      ));
   }
 
   /**

@@ -25,7 +25,7 @@ class CustomerController extends BaseController {
         "user_full_name": customerFullName
       };
 
-      return BaseResponse.ok(dto, "Sukses", response);
+      return BaseResponse.ok(dto, "Success", response);
     });
 
     return app;

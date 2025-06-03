@@ -1,11 +1,10 @@
 import Knex from "knex";
 import config from './Config';
 import {Log} from './Logging';
-import path from 'path';
 import {Sequelize, SequelizeOptions} from "sequelize-typescript";
 import {Dialect} from "sequelize";
 
-const NAMESPACE: string = "DATABASE";
+const NAMESPACE = "DATABASE";
 
 interface DatabaseConnectionSetup {
     "database": string,
@@ -14,7 +13,7 @@ interface DatabaseConnectionSetup {
     "host": string,
     "dialect": Dialect,
     "port": number,
-    "model_folder": string
+    "path": Array<string>
 }
 
 export class DatabaseDriver {
@@ -54,7 +53,7 @@ export class DatabaseDriver {
                 // if(this.configuration.dialect == 'mssql'){
                 //     synonym = 
                 // }
-            default:
+            
         }
 
         return synonym;
@@ -78,71 +77,73 @@ export class DatabaseDriver {
     public authenticate(): any {
         let connection: any = null;
 
-        switch(this.selectedDriver){
-            case "sequelize":
-
-                let sequelize: Sequelize;
-                const sequelizeOption: SequelizeOptions = {
-                    "host"        : this.configuration.host,
-                    "dialect"     : this.configuration.dialect,
-                    "port"        : this.configuration.port,
-                    // "logging"     : (... msg) => console.log(msg),
-                    "logging"     : false,
-                    "models"      : [path.join(__dirname, this.configuration.model_folder)]
-                };
-                
-                if(this.configuration.dialect === 'mssql'){
-                    Object.assign(sequelizeOption, {
-                        "dialectOptions": {
-                            "trustServerCertificate": true,
-                            "trustedConnection": true,
-                            "encrypt": true,
-                        }
-                    })
+        if(this.selectedDriver == "sequelize"){
+            const sequelizeOption: SequelizeOptions = {
+                "host"        : this.configuration.host,
+                "dialect"     : this.configuration.dialect,
+                "port"        : this.configuration.port,
+                // "logging"     : (... msg) => console.log(msg),
+                "logging"     : false,
+                "models"      : this.configuration.path,
+                "timezone"    : "Asia/Jakarta",
+            };
+            
+            if(this.configuration.dialect === 'mssql'){
+                sequelizeOption.dialectOptions= {
+                    "trustServerCertificate": true,
+                    "trustedConnection": true,
+                    "encrypt": true,
+                    "options": {
+                        "useUTC": false
+                    }
                 }
-                sequelize = new Sequelize(
-                    this.configuration.database,
-                    this.configuration.username,
-                    this.configuration.password,
-                    sequelizeOption
-                );
-
-                sequelize
-                    .authenticate()
-                    .then(async () => {
-                        Log.d(NAMESPACE, `[ORM DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
-                    })
-                    .catch(error => {
-                        Log.e(NAMESPACE, `[ORM DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} cannot be established: ${error}`);
-                    });
-
-                connection = sequelize;
-                break;
-
-            case "knex":
-                try{
-                    connection = Knex({
-                        "client": this.driverSynonym(),
-                        "connection": {
-                            "host": this.configuration.host,
-                            "port": this.configuration.port,
-                            "user": this.configuration.username,
-                            "password": this.configuration.password,
-                            "database": this.configuration.database
-                        },
-                        "pool": {
-                            "min": 0,
-                            "max": 7
-                        }
-                    });
-
-                    Log.d(NAMESPACE, `[KNEX DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
-                }catch(error){
-                    Log.d(NAMESPACE, `[KNEX DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} cannot be established: ${error}`);
+            }else if(this.configuration.dialect === 'postgres'){
+                sequelizeOption.dialectOptions= {
+                    "trustServerCertificate": true,
+                    "trustedConnection": true,
+                    "encrypt": true,
+                    "useUTC": false
                 }
+            }
 
+            const sequelize = new Sequelize(
+                this.configuration.database,
+                this.configuration.username,
+                this.configuration.password,
+                sequelizeOption
+            );
 
-                break;
+            sequelize
+                .authenticate()
+                .then(async () => {
+                    Log.d(NAMESPACE, `[ORM DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
+                })
+                .catch(error => {
+                    Log.e(NAMESPACE, `[ORM DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} cannot be establish: ${error}`);
+                });
+
+            connection = sequelize;
+        }else {
+            try{
+                connection = Knex({
+                    "client": this.driverSynonym(),
+                    "connection": {
+                        "host": this.configuration.host,
+                        "port": this.configuration.port,
+                        "user": this.configuration.username,
+                        "password": this.configuration.password,
+                        "database": this.configuration.database
+                    },
+                    "pool": {
+                        "min": 0,
+                        "max": 7
+                    }
+                });
+
+                Log.d(NAMESPACE, `[KNEX DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} has been established.`);
+            }catch(error){
+                Log.d(NAMESPACE, `[KNEX DRIVER (${this.selectedDriver})] Connection to ${this.configuration.database} cannot be established: ${error}`);
+            }
         }
 
         return connection;
@@ -161,7 +162,7 @@ export class DatabaseDriver {
  * @param connection
  * @constructor
  */
-export const DatabaseSlave = (connection: string = "main"): any => {
+export const DatabaseSlave = (connection = "main"): any => {
     type DatabaseConnectionObject = keyof typeof config.database;
     const selection = connection as DatabaseConnectionObject;
 
@@ -178,7 +179,7 @@ export const DatabaseSlave = (connection: string = "main"): any => {
                 "host": config.database[selection].uri as string,
                 "port": config.database[selection].port as number,
                 "dialect": config.database[selection].dialect as Dialect,
-                "model_folder": config.database[selection].model_folder as string
+                "path": config.database[selection].path as Array<string>
             }
     ).authenticate();
 }

@@ -6,6 +6,7 @@ import AdditionParamsRequestValidation from "../../common/validation/example/Add
 import ExampleAgeInputRequestValidation from "../../common/validation/example/ExampleAgeInputRequestValidation";
 import {ExampleControllerHandler} from "./ExampleControllerHandler";
 import {DB} from '../../config/DBFacade';
+import { MessagingProducer } from '../../messaging/pusher/MessagingPusher';
 
 const app = express.Router();
 
@@ -33,6 +34,17 @@ class ExampleController extends BaseController {
       super.requestValidator(request);
 
       return BaseResponse.ok(request.body, "Success", response);
+    });
+
+    /**
+     * @method POST
+     * exampleMessagingProducer
+     */
+    app.post("/example/messaging/producer", (request: Request, response: Response) => {
+
+      MessagingProducer.producer();
+
+      return BaseResponse.ok(null, "Success produce message!", response);
     });
 
     /**

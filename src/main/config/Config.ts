@@ -61,7 +61,7 @@ export default {
   "messaging": {
     "main": {
       "connection_string": process.env.RABBITMQ_CONNECTION_STRING_MAIN ?? 'amqp://10.1.12.71:5672',
-      "enable": true
+      "enable": false
     }
   },
 
@@ -72,7 +72,7 @@ export default {
       "database"  : process.env.MONGODB_DATABASE ?? '',
       "username"  : process.env.MONGODB_USERNAME ?? '',
       "password"  : process.env.MONGODB_PASSWORD ?? '',
-      "enable"   : true
+      "enable"   : false
     },
   }
   

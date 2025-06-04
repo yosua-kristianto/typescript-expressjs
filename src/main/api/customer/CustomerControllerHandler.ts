@@ -1,4 +1,4 @@
-import Customer from "../../model/entity/Customer";
+import Customer from "../../model/entity/main/Customer";
 
 export class CustomerControllerHandler {
 

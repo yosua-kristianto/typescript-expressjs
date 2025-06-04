@@ -2,7 +2,7 @@ import {DataTypes} from 'sequelize';
 import {Column, Model, Table} from 'sequelize-typescript';
 
 @Table({
-    tableName    : '[dbo].[Customer]',
+    tableName    : 'customer',
     timestamps   : false,
     paranoid    : false,
     underscored  : true

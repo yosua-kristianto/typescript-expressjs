@@ -69,6 +69,7 @@
     "knex": "^2.3.0",
     "mongoose": "^6.10.0",
     "mssql": "^9.0.1",
+    "mysql2": "^3.14.1",
     "pg": "^8.7.3",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.1.13",

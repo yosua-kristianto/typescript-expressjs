@@ -1,33 +1,32 @@
-import User from '../model/entity/main/User';
-import {CreateUserDTO} from '../model/dto/request/CreateUserDTO';
+import {UserNotFoundException} from '../common/exception/UserNotFoundException';
+import {CreateUserDTO} from '../api/user/request/CreateUserDTO';
+import User from '../model/entity/User';
+import {IUserRepository} from './IUserRepository';
 
-export interface UserRepository {
-  
-  /**
-   * findUserById
-   *  A repository to find user data by id.
-   * 
-   * @param number id
-   * 
-   * @return /model/entity/User
-   */
-  findUserById(id: number): Promise<User>;
+class UserRepository implements IUserRepository {
 
-  /**
-   * getAllUser
-   *  A repository to get all user data.
-   * 
-   * @return Array<User>
-   */
-  getAllUser(): Promise<User[]>;
+  findUserById = async(id: number): Promise<User> =>
+    User.findOne({
+      where: {
+        is_deleted: 0,
+        id: id
+      }
+    }).then(resultSet => {
+      if(resultSet === null) throw new UserNotFoundException();
 
-  /**
-   * createUser
-   *  A repository to create new User by
-   *  designed DTO.
-   * 
-   * @return User
-   */
-  createUser(request: CreateUserDTO): Promise<User>;
+      return resultSet;
+    });
 
+  getAllUser = async(): Promise<Array<User>> => User.findAll({where: {is_deleted: 0}});
+
+  createUser = async (request: CreateUserDTO): Promise<User> =>
+    User.create({
+      "email": request.email,
+      "phone": request.phone,
+      "password": "default",
+      "is_deleted": 0
+    });
+    
 }
+
+export default new UserRepository();

@@ -1,8 +1,8 @@
 import {BaseController} from '../BaseController';
 import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../model/dto/BaseResponse';
+import {BaseResponse} from '../../common/facade/BaseResponse';
 import {CustomerControllerHandler} from "./CustomerControllerHandler";
-import {CreateCustomerResponseDTO} from '../../model/dto/response/customer/CreateCustomerResponseDTO';
+import {CreateCustomerResponseDTO} from './response/CreateCustomerResponseDTO';
 
 const app = express.Router();
 

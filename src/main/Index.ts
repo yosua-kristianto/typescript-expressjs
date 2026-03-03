@@ -6,7 +6,7 @@ import 'express-async-errors';
 import config from './config/Config';
 import {Log} from './config/Logging';
 
-import {BaseResponse} from './model/dto/BaseResponse';
+import {BaseResponse} from './common/facade/BaseResponse';
 /**
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.

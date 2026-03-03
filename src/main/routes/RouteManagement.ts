@@ -1,4 +1,4 @@
-import {BaseResponse} from '../model/dto/BaseResponse';
+import {BaseResponse} from '../common/facade/BaseResponse';
 import express from 'express';
 /*
 |--------------------------------------------------------------------------

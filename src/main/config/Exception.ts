@@ -2,7 +2,7 @@ import process from "process";
 import {Log} from "./Logging";
 
 import {Response} from 'express';
-import {BaseResponse} from '../model/dto/BaseResponse';
+import {BaseResponse} from '../common/facade/BaseResponse';
 
 /**
  * ErrorHandler

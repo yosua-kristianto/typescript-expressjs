@@ -1,7 +1,7 @@
 import {BaseController} from '../BaseController';
 import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../model/dto/BaseResponse';
-import User from '../../model/entity/main/User';
+import {BaseResponse} from '../../common/facade/BaseResponse';
+import User from '../../model/entity/User';
 import {UserHandler} from "./UserControllerHandler";
 
 const app = express.Router();

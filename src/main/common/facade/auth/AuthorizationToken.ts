@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import {Request} from "express";
-import {JWTPayload} from "../../model/dto/common/authentication/JWTPayload";
-import {ErrorHandler} from "../../config/Exception";
+import {JWTPayload} from "./JWTPayload";
+import {ErrorHandler} from "../../../config/Exception";
 
 /**
  * @author https://github.com/CuaMcCarsaree44

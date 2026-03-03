@@ -1,9 +1,9 @@
 import {BaseController} from '../BaseController';
 import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../model/dto/BaseResponse';
-import ExampleValidation from '../../common/validation/ExampleValidation';
-import AdditionParamsRequestValidation from "../../common/validation/example/AdditionParamsRequestValidation";
-import ExampleAgeInputRequestValidation from "../../common/validation/example/ExampleAgeInputRequestValidation";
+import {BaseResponse} from '../../common/facade/BaseResponse';
+import ExampleValidation from './validation/ExampleValidation';
+import AdditionParamsRequestValidation from "./validation/AdditionParamsRequestValidation";
+import ExampleAgeInputRequestValidation from "./validation/ExampleAgeInputRequestValidation";
 import {ExampleControllerHandler} from "./ExampleControllerHandler";
 import {DB} from '../../config/DBFacade';
 import { MessagingProducer } from '../../messaging/pusher/MessagingPusher';

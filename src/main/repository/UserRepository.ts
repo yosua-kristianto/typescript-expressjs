@@ -8,7 +8,7 @@ class UserRepository implements IUserRepository {
   findUserById = async(id: number): Promise<MobileUser> =>
     MobileUser.findOne({
       where: {
-        is_deleted: 0,
+        deleted_at: null,
         id: id
       }
     }).then(resultSet => {
@@ -17,7 +17,7 @@ class UserRepository implements IUserRepository {
       return resultSet;
     });
 
-  getAllUser = async(): Promise<Array<MobileUser>> => MobileUser.findAll({where: {is_deleted: 0}});
+  getAllUser = async(): Promise<Array<MobileUser>> => MobileUser.findAll({where: {deleted_at: null}});
 
   createUser = async (request: CreateUserDTO): Promise<MobileUser> =>
     MobileUser.create({

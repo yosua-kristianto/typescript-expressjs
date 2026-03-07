@@ -3,6 +3,7 @@ import { IUserControllerHandler } from "./IUserControllerHandler";
 
 export class UserControllerHandler implements IUserControllerHandler{
     handleGetUserById(id: string): Promise<MobileUser> {
+        
         throw new Error("Method not implemented.");
     }
     handleGetAllUser(search: string, page: number, perPage: number): Promise<MobileUser[]> {

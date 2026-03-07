@@ -50,7 +50,7 @@ export class DB {
    * other registered
    * @param connection
    */
-  public static connection = (connection: string = 'main'): any => {
+  public static connection = (connection = 'main'): any => {
     console.log("Attempt to change remote to " + connection);
     return this.getInstance().getConnection(connection);
   }
@@ -62,7 +62,7 @@ export class DB {
    *
    * @param connection
    */
-  private getConnection = (connection: string = 'main'): any => {
+  private getConnection = (connection = 'main'): any => {
     if(!this.availableConnectionLabel.includes(connection)){
       throw new Error(`Connection with label of ${connection} is not set! Please consider to check Config.ts within database configuration`);
     }

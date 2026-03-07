@@ -1,5 +1,5 @@
 import config from '../Config';
-import redis, { Redis } from 'ioredis';
+import redis from 'ioredis';
 
 export interface RedisConnectionSetup {
   port: number;

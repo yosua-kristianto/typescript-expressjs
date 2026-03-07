@@ -37,28 +37,38 @@ It includes native integrations with:
 
 ## 📁 Project Structure
 
-.
-├── main/ # Source code <br />
-│ ├── main.api/ # Business logic (Modular structure: each has controller + handler) <br />
-│ ├── main.common/ # Reusable modules <br />
-│ │ ├── exception/ # Custom exceptions <br />
-│ │ ├── facade/ # Facade helpers for integration logic <br />
-│ │ ├── middleware/ # Express middleware <br />
-│ │ └── validation/ # Express validation logic <br />
-│ ├── main.config/ # Configurations for Redis, DB, Mongo, RabbitMQ, Logging <br />
-│ ├── main.messaging/ # RabbitMQ publisher & consumer <br />
-│ ├── main.model/ # Shared entity models for Redis, MongoDB, SQL <br />
-│ ├── main.repository/ # Data access layer <br />
-│ └── main.routes/ # Route registration <br />
-├── resources/ # Swagger docs & Sequelize migrations <br />
-├── test/ # Unit & contract tests (Jest) <br />
-├── .eslintrc.js # ESLint config <br />
-├── .prettierrc # Prettier config <br />
-├── .husky/ # Git hook setup <br />
-├── docker-compose.yml # Dev container orchestration <br />
-└── Dockerfile # Runtime container definition <br />
-
-
+📦src <br />
+ ┣ 📂main <br />
+ ┃ ┣ 📂api <br />
+ ┃ ┃ ┣ module <br />
+ ┃ ┃ ┃ ┣ 📂validation <br />
+ ┃ ┃ ┃ ┣ 📂handler <br />
+ ┃ ┃ ┃ ┣ 📂request <br />
+ ┃ ┃ ┃ ┣ 📂response <br />
+ ┃ ┣ 📂common <br />
+ ┃ ┃ ┣ 📂exception <br />
+ ┃ ┃ ┃ ┣ 📂example <br />
+ ┃ ┃ ┣ 📂facade <br />
+ ┃ ┃ ┃ ┣ 📂auth <br />
+ ┃ ┃ ┗ 📂middleware <br />
+ ┃ ┣ 📂config <br />
+ ┃ ┃ ┣ 📂memcache <br />
+ ┃ ┃ ┣ 📂message.broker <br />
+ ┃ ┣ 📂messaging <br />
+ ┃ ┃ ┣ 📂puller <br />
+ ┃ ┃ ┗ 📂pusher <br />
+ ┃ ┣ 📂model <br />
+ ┃ ┃ ┣ 📂entity <br />
+ ┃ ┃ ┗ 📂memcache <br />
+ ┃ ┣ 📂repository <br />
+ ┃ ┣ 📂routes <br />
+ ┣ 📂resources <br />
+ ┃ ┣ 📂banner <br />
+ ┃ ┣ 📂sequelize-cli <br />
+ ┃ ┃ ┣ 📂migrations <br />
+ ┃ ┃ ┣ 📂seeders <br />
+ ┃ ┗ 📂swagger <br />
+ ┗ 📂test <br />
 
 ---
 

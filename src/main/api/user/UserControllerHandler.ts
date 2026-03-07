@@ -1,6 +1,6 @@
-import User from "../../model/entity/User";
 import {CreateUserDTO} from "./request/CreateUserDTO";
 import UserRepository from "../../repository/UserRepository";
+import MobileUser from "../../model/entity/MobileUser";
 
 export class UserHandler {
 
@@ -15,13 +15,13 @@ export class UserHandler {
   public createUserHandler = async (
     email: string,
     phone: string
-  ): Promise<User> => {
+  ): Promise<MobileUser> => {
     const dto: CreateUserDTO = {
       "email": email,
       "phone": phone
     };
 
-    const newUser: User = await UserRepository.createUser(dto);
+    const newUser: MobileUser = await UserRepository.createUser(dto);
 
     return newUser;
   }
@@ -33,8 +33,8 @@ export class UserHandler {
    *
    * @param id
    */
-  public getUserByIdHandler = async (id: number): Promise<User> => {
-    const user: User = await UserRepository.findUserById(id);
+  public getUserByIdHandler = async (id: number): Promise<MobileUser> => {
+    const user: MobileUser = await UserRepository.findUserById(id);
 
     return user;
   }

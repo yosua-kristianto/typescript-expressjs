@@ -1,7 +1,7 @@
 import {BaseController} from '../BaseController';
 import express, {Request, Response} from 'express';
 import {BaseResponse} from '../../common/facade/BaseResponse';
-import User from '../../model/entity/User';
+import MobileUser from '../../model/entity/MobileUser';
 import {UserHandler} from "./UserControllerHandler";
 
 const app = express.Router();
@@ -19,7 +19,7 @@ class UserController extends BaseController {
      * This API will create a User data.
      */
     app.post('/user', async (request: Request, response: Response) => {
-      const newUser: User = await this.handler.createUserHandler(
+      const newUser: MobileUser = await this.handler.createUserHandler(
         request.body.email,
         request.body.phone
       );
@@ -36,7 +36,7 @@ class UserController extends BaseController {
     app.get('/user/:id', async (request: Request, response: Response) => {
       const id: number = parseInt((request.params.id).toString());
 
-      const user: User = await this.handler.getUserByIdHandler(id);
+      const user: MobileUser = await this.handler.getUserByIdHandler(id);
 
       return BaseResponse.ok(user, "Succesfully returned user data", response);
     });

@@ -1,12 +1,12 @@
 import {UserNotFoundException} from '../common/exception/UserNotFoundException';
 import {CreateUserDTO} from '../api/user/request/CreateUserDTO';
-import User from '../model/entity/User';
+import MobileUser from '../model/entity/MobileUser';
 import {IUserRepository} from './IUserRepository';
 
 class UserRepository implements IUserRepository {
 
-  findUserById = async(id: number): Promise<User> =>
-    User.findOne({
+  findUserById = async(id: number): Promise<MobileUser> =>
+    MobileUser.findOne({
       where: {
         is_deleted: 0,
         id: id
@@ -17,10 +17,10 @@ class UserRepository implements IUserRepository {
       return resultSet;
     });
 
-  getAllUser = async(): Promise<Array<User>> => User.findAll({where: {is_deleted: 0}});
+  getAllUser = async(): Promise<Array<MobileUser>> => MobileUser.findAll({where: {is_deleted: 0}});
 
-  createUser = async (request: CreateUserDTO): Promise<User> =>
-    User.create({
+  createUser = async (request: CreateUserDTO): Promise<MobileUser> =>
+    MobileUser.create({
       "email": request.email,
       "phone": request.phone,
       "password": "default",

@@ -1,4 +1,4 @@
-import User from '../model/entity/User';
+import MobileUser from '../model/entity/MobileUser';
 import {CreateUserDTO} from '../api/user/request/CreateUserDTO';
 
 export interface IUserRepository {
@@ -11,7 +11,7 @@ export interface IUserRepository {
    * 
    * @return /model/entity/User
    */
-  findUserById(id: number): Promise<User>;
+  findUserById(id: number): Promise<MobileUser>;
 
   /**
    * getAllUser
@@ -19,7 +19,7 @@ export interface IUserRepository {
    * 
    * @return Array<User>
    */
-  getAllUser(): Promise<User[]>;
+  getAllUser(): Promise<MobileUser[]>;
 
   /**
    * createUser
@@ -28,6 +28,6 @@ export interface IUserRepository {
    * 
    * @return User
    */
-  createUser(request: CreateUserDTO): Promise<User>;
+  createUser(request: CreateUserDTO): Promise<MobileUser>;
 
 }

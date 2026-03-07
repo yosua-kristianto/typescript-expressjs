@@ -87,23 +87,29 @@ export class DatabaseDriver {
                 "models"      : this.configuration.path,
                 "timezone"    : "Asia/Jakarta",
             };
-            
-            if(this.configuration.dialect === 'mssql'){
-                sequelizeOption.dialectOptions= {
-                    "trustServerCertificate": true,
-                    "trustedConnection": true,
-                    "encrypt": true,
-                    "options": {
+
+            switch(this.configuration.dialect){
+                case "mssql":
+                    sequelizeOption.dialectOptions = {
+                        "trustServerCertificate": true,
+                        "trustedConnection": true,
+                        "encrypt": true,
+                        "options": {
+                            "useUTC": false
+                        }
+                    };
+                    break;
+
+                case "postgres":
+                    sequelizeOption.dialectOptions = {
+                        "trustServerCertificate": true,
+                        "trustedConnection": true,
+                        "encrypt": true,
                         "useUTC": false
-                    }
-                }
-            }else if(this.configuration.dialect === 'postgres'){
-                sequelizeOption.dialectOptions= {
-                    "trustServerCertificate": true,
-                    "trustedConnection": true,
-                    "encrypt": true,
-                    "useUTC": false
-                }
+                    };
+                    break;
+                
+                default: break;
             }
 
             const sequelize = new Sequelize(

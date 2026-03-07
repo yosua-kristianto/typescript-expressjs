@@ -49,11 +49,11 @@ export default {
 
   "memcache": {
     "main": {
-      "host": process.env.REDIS_MAIN_HOSTNAME ?? 'localhost',
-      "port": parseInt(process.env.REDIS_MAIN_PORT ?? '6379'),
-      "db_cluster": parseInt(process.env.REDIS_MAIN_DB_CLUSTER ?? '0'),
-      "family": parseInt(process.env.REDIS_MAIN_IP_VERSION ?? '4'),
-      "password": process.env.REDIS_MAIN_PASSWORD ?? 'root',
+      "host": process.env.MEMCACHE_MAIN_HOSTNAME ?? 'localhost',
+      "port": parseInt(process.env.MEMCACHE_MAIN_PORT ?? '6379'),
+      "db_cluster": parseInt(process.env.MEMCACHE_MAIN_DB_CLUSTER ?? '0'),
+      "family": parseInt(process.env.MEMCACHE_MAIN_IP_VERSION ?? '4'),
+      "password": process.env.MEMCACHE_MAIN_PASSWORD ?? 'root',
       "enable": false
     }
   },

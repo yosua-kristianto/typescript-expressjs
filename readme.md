@@ -102,8 +102,8 @@ It includes native integrations with:
 
 ### 1. Clone and install dependencies
 ```bash
-git clone https://github.com/your-user/cuakx.git
-cd cuakx
+git clone https://github.com/yosua-kristianto/Cuakx-Express.git
+cd Cuakx-Express
 npm install
 ```
 

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import config from "./Config";
+import config from "@config/Config";
 
 interface MongooseConnectionSetup {
   "host": string;

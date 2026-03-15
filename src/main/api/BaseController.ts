@@ -1,8 +1,10 @@
 import {validationResult} from "express-validator";
-import RequestValidationException from "../common/exception/RequestValidationException";
-import {Request} from "express";
+import RequestValidationException from "@common/exception/RequestValidationException";
+import express, {Request} from "express";
 
 export abstract class BaseController {
+
+  protected app = express.Router();
   
   /**
    * requestValidator

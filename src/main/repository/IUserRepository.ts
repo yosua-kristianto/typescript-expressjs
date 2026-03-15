@@ -1,5 +1,5 @@
-import MobileUser from '../model/entity/MobileUser';
-import {CreateUserDTO} from '../api/user/request/CreateUserDTO';
+import MobileUser from '@model/entity/MobileUser';
+import {CreateUserDTO} from '@api/user/request/CreateUserDTO';
 
 export interface IUserRepository {
   

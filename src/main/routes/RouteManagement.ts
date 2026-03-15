@@ -1,4 +1,4 @@
-import {BaseResponse} from '../common/facade/BaseResponse';
+import {BaseResponse} from '@common/facade/BaseResponse';
 import express from 'express';
 /*
 |--------------------------------------------------------------------------
@@ -11,12 +11,12 @@ import express from 'express';
 | with PascalCase.
 |
 */
-import ExampleController from "../api/example/ExampleController";
-import UserController from "../api/user/UserController";
+import ExampleController from "@api/example/ExampleController";
+import UserController from "@api/user/UserController";
 /**
  * API root point. Just to make sure the API is okay.
  */
-import config from '../config/Config';
+import config from '@config/Config';
 
 const route = express.Router();
 

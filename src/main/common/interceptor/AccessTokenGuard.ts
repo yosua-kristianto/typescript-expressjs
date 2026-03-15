@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
-import {AuthorizationToken} from "../facade/auth/AuthorizationToken";
-import {BaseResponse} from "../facade/BaseResponse";
+import {AuthorizationToken} from "@common/facade/auth/AuthorizationToken";
+import {BaseResponse} from "@common/facade/BaseResponse";
 
 /**
  * Register all unguarded resources here

@@ -1,7 +1,7 @@
-import {UserNotFoundException} from '../common/exception/UserNotFoundException';
-import {CreateUserDTO} from '../api/user/request/CreateUserDTO';
-import MobileUser from '../model/entity/MobileUser';
-import {IUserRepository} from './IUserRepository';
+import {UserNotFoundException} from '@common/exception/UserNotFoundException';
+import {CreateUserDTO} from '@api/user/request/CreateUserDTO';
+import MobileUser from '@model/entity/MobileUser';
+import {IUserRepository} from '@repository/IUserRepository';
 
 class UserRepository implements IUserRepository {
 

@@ -1,6 +1,6 @@
 import Knex from "knex";
-import config from './Config';
-import {Log} from './Logging';
+import config from '@config/Config';
+import {Log} from '@config/Logging';
 import {Sequelize, SequelizeOptions} from "sequelize-typescript";
 import {Dialect} from "sequelize";
 

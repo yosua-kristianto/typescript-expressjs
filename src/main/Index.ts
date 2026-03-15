@@ -3,16 +3,16 @@ import express, {NextFunction, Request, Response} from 'express';
 
 import 'express-async-errors';
 
-import config from './config/Config';
-import {Log} from './config/Logging';
+import config from '@config/Config';
+import {Log} from '@config/Logging';
 
-import {BaseResponse} from './common/facade/BaseResponse';
+import {BaseResponse} from '@common/facade/BaseResponse';
 /**
  * Process watcher
  *  Make sure you don't fuck with `logging.ts`'s log file path.
  */
-import "./config/DBFacade";
-import {ErrorHandler, handleError} from './config/Exception';
+import "@config/DBFacade";
+import {ErrorHandler, handleError} from '@config/Exception';
 
 // Uncomment to enable Redis
 // import "./config/memcache/RedisFacade";
@@ -34,11 +34,11 @@ import {ErrorHandler, handleError} from './config/Exception';
 | to make sure this project tides up.
 |
 */
-import middleware from './common/middleware/Middleware';
+import interceptor from '@common/interceptor/Interceptor';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
-import SwaggerOption from "../resources/swagger/SwaggerOption";
-import routes from './routes/RouteManagement';
+import SwaggerOption from "@res/swagger/SwaggerOption";
+import routes from '@routes/RouteManagement';
 
 dotenv.config();
 
@@ -59,7 +59,7 @@ const NAMESPACE = 'ServerZ';
 | Feel free to change or update the configuration.
 |
 */
-import Banner from '../resources/banner/Banner';
+import Banner from '@res/banner/Banner';
 console.log(`
 Session ${new Date()}
 
@@ -67,11 +67,7 @@ ${Banner}
 `);
 
 
-
-/**
- * Loop trough ./api/middleware/middleware.ts
- */
-middleware.forEach((e) => {
+interceptor.forEach((e) => {
   router.use(e);
 });
 

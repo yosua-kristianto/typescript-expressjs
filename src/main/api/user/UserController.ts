@@ -1,14 +1,16 @@
-import {BaseController} from '../BaseController';
+import {BaseController} from '@api/BaseController';
 import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../common/facade/BaseResponse';
-import MobileUser from '../../model/entity/MobileUser';
-import {UserHandler} from "./UserControllerHandler";
-
-const app = express.Router();
+import {BaseResponse} from '@common/facade/BaseResponse';
+import MobileUser from '@model/entity/MobileUser';
+import { UserControllerHandler } from '@api/user/handler/UserControllerHandler';
 
 class UserController extends BaseController {
 
-  private handler: UserHandler = new UserHandler();
+  public constructor() {
+    super();
+  }
+
+  private handler = new UserControllerHandler();
 
   public routes = (): express.Router => {
 
@@ -18,8 +20,8 @@ class UserController extends BaseController {
      *
      * This API will create a User data.
      */
-    app.post('/user', async (request: Request, response: Response) => {
-      const newUser: MobileUser = await this.handler.createUserHandler(
+    this.app.post('/user', async (request: Request, response: Response) => {
+      const newUser: MobileUser = await this.handler.handleCreateUser(
         request.body.email,
         request.body.phone
       );
@@ -33,16 +35,16 @@ class UserController extends BaseController {
      *
      * This API will return user data with destinated source of ID.
      */
-    app.get('/user/:id', async (request: Request, response: Response) => {
-      const id: number = parseInt((request.params.id).toString());
+    this.app.get('/user/:id', async (request: Request, response: Response) => {
+      const id: string = (request.params.id).toString();
 
-      const user: MobileUser = await this.handler.getUserByIdHandler(id);
+      const user: MobileUser = await this.handler.handleGetUserById(id);
 
       return BaseResponse.ok(user, "Succesfully returned user data", response);
     });
 
 
-    return app;
+    return this.app;
   }
 
 }

@@ -1,8 +1,8 @@
 import process from "process";
-import {Log} from "./Logging";
+import {Log} from "@config/Logging";
 
 import {Response} from 'express';
-import {BaseResponse} from '../common/facade/BaseResponse';
+import {BaseResponse} from '@common/facade/BaseResponse';
 
 /**
  * ErrorHandler

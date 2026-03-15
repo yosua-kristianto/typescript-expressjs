@@ -1,12 +1,12 @@
-import {BaseController} from '../BaseController';
+import {BaseController} from '@api/BaseController';
 import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../common/facade/BaseResponse';
-import ExampleValidation from './validation/ExampleValidation';
-import AdditionParamsRequestValidation from "./validation/AdditionParamsRequestValidation";
-import ExampleAgeInputRequestValidation from "./validation/ExampleAgeInputRequestValidation";
-import {ExampleControllerHandler} from "./ExampleControllerHandler";
-import {DB} from '../../config/DBFacade';
-import { MessagingProducer } from '../../messaging/pusher/MessagingPusher';
+import {BaseResponse} from '@common/facade/BaseResponse';
+import ExampleValidation from '@api/example/validation/ExampleValidation';
+import AdditionParamsRequestValidation from "@api/example/validation/AdditionParamsRequestValidation";
+import ExampleAgeInputRequestValidation from "@api/example/validation/ExampleAgeInputRequestValidation";
+import {ExampleControllerHandler} from "@api/example/ExampleControllerHandler";
+import {DB} from '@config/DBFacade';
+import { MessagingProducer } from '@messaging/pusher/MessagingPusher';
 
 const app = express.Router();
 

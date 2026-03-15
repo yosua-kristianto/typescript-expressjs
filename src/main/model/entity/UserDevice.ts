@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { BelongsTo, Column, Model, Table } from 'sequelize-typescript';
-import LovDeviceType from './LovDeviceType';
-import MobileUser from './MobileUser';
+import LovDeviceType from '@model/entity/LovDeviceType';
+import MobileUser from '@model/entity/MobileUser';
 
 @Table({
     tableName  : 'uma_tbl_user_devices',

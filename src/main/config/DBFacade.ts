@@ -1,5 +1,5 @@
-import {DatabaseSlave} from "./DatabaseSlave";
-import config from "./Config";
+import {DatabaseSlave} from "@config/DatabaseSlave";
+import config from "@config/Config";
 
 /**
  * DB

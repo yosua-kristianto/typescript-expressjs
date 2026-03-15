@@ -1,4 +1,4 @@
-import { Messaging } from "../../config/message.broker/MessagingFacade";
+import { Messaging } from "@config/message.broker/MessagingFacade";
 
 /**
  *

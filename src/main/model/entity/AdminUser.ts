@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { Column, HasMany, Model, Table } from 'sequelize-typescript';
-import MapAdminRole from './MapAdminRole';
+import MapAdminRole from '@model/entity/MapAdminRole';
 
 @Table({
     tableName  : 'uma_tbl_admin_users',

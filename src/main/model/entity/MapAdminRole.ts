@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { BelongsTo, Column, Model, Table } from 'sequelize-typescript';
-import AdminUser from './AdminUser';
-import Role from './Role';
+import AdminUser from '@model/entity/AdminUser';
+import Role from '@model/entity/Role';
 
 @Table({
     tableName  : 'uma_tbl_map_admin_role',
@@ -24,7 +24,7 @@ class MapAdminRole extends Model {
         type        : DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4
     })
-    id!: string;
+    map_admin_role_id!: string;
 
     @Column({
         allowNull : false,

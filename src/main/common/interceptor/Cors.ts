@@ -2,7 +2,7 @@ import {NextFunction, Request, Response} from 'express';
 
 /**
  * cors.ts
- *  This middleware contain 
+ *  This interceptor contains CORS configuration. 
  */
 
 export default (req: Request, res: Response, next: NextFunction) => {

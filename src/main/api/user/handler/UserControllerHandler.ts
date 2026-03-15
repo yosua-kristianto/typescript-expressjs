@@ -1,5 +1,5 @@
 import MobileUser from "@model/entity/MobileUser";
-import { IUserControllerHandler } from "./IUserControllerHandler";
+import { IUserControllerHandler } from "@api/user/handler/IUserControllerHandler";
 
 export class UserControllerHandler implements IUserControllerHandler{
     handleGetUserById(id: string): Promise<MobileUser> {

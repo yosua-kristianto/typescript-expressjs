@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { BelongsTo, Column, Model, Table } from 'sequelize-typescript';
-import CmsMenu from './CmsMenu';
-import Role from './Role';
+import CmsMenu from '@model/entity/CmsMenu';
+import Role from '@model/entity/Role';
 
 @Table({
     tableName  : 'uma_tbl_map_role_menu_access',

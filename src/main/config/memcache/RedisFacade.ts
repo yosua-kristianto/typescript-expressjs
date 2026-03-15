@@ -1,4 +1,4 @@
-import config from '../Config';
+import config from '@config/Config';
 import redis from 'ioredis';
 
 export interface RedisConnectionSetup {

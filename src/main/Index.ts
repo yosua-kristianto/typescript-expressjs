@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
 import express, {NextFunction, Request, Response} from 'express';
 
-import 'express-async-errors';
-
 import config from '@config/Config';
 import {Log} from '@config/Logging';
 
@@ -15,7 +13,7 @@ import "@config/DBFacade";
 import {ErrorHandler, handleError} from '@config/Exception';
 
 // Uncomment to enable Redis
-// import "./config/memcache/RedisFacade";
+// import "@config/memcache/RedisFacade";
 
 // Uncomment to enable MongoDB Connection
 // import "./config/MongooseConfig";

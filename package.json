@@ -1,12 +1,12 @@
 {
   "name": "cuakx-express",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Cuakx Express is a highly structured and extensible backend boilerplate for modern backend services.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/main/Index.ts",
-    "start": "node dist/main/Index.js",
+    "dev": "nodemon --exec \"ts-node -r tsconfig-paths/register\" src/main/Index.ts",
     "build": "tsc -p tsconfig.build.json",
+    "start": "npm run build; node -r tsconfig-paths/register dist/main/Index.js",
     "test": "jest",
     "db:init": "npx sequelize db:create",
     "migrate": "npx sequelize db:migrate",
@@ -60,7 +60,6 @@
     "amqplib": "^0.10.9",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
-    "express-async-errors": "^3.1.1",
     "express-validator": "^7.3.1",
     "fastify": "^5.8.2",
     "husky": "^9.1.7",
@@ -79,6 +78,7 @@
     "sequelize-typescript": "^2.1.6",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "tedious": "^19.2.1"
+    "tedious": "^19.2.1",
+    "tsconfig-paths": "^4.2.0"
   }
 }

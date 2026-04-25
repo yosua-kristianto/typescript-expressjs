@@ -1,6 +1,4 @@
-import MobileUser from '../model/entity/MobileUser';
-import {CreateUserDTO} from '../api/user/request/CreateUserDTO';
-
+import MobileUser from '@model/entity/MobileUser';
 export interface IUserRepository {
   
   /**
@@ -28,6 +26,6 @@ export interface IUserRepository {
    * 
    * @return User
    */
-  createUser(request: CreateUserDTO): Promise<MobileUser>;
+  // createUser(request: CreateUserDTO): Promise<MobileUser>;
 
 }

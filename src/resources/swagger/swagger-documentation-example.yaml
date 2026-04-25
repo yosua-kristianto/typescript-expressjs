@@ -1,22 +1,49 @@
-/api/example:
-  post:
-    parameters:
-    - in: body
-      schema:
-        type: object
-        required:
-          - name
-        properties:
-          name:
-            type: string
-            example: "Kinthil"
-    description: This API will create new user data.
-    responses:
-      200:
-        description: This API will return the exact same from your request
-        schema:
-          type: object
-          properties:
-            name:
-              type: string
-              example: "Kinthil"
+paths:
+  /api/example:
+    get:
+      summary: Example GET endpoint
+      responses:
+        '200':
+          description: Example response payload
+
+    post:
+      summary: Example POST endpoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  example: Kinthil
+      responses:
+        '200':
+          description: Returns sent payload
+
+  /api/heartbeat:
+    post:
+      summary: Core heartbeat endpoint
+      description: Returns liveness status and timestamp from core route registry.
+      responses:
+        '200':
+          description: Heartbeat acknowledged
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: alive
+                      timestamp:
+                        type: string
+                        example: 2026-04-18T12:00:00.000Z

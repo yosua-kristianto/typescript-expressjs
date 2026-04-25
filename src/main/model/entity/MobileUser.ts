@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { Column, HasMany, Model, Table } from 'sequelize-typescript';
-import UserDevice from './UserDevice';
+import UserDevice from '@model/entity/UserDevice';
 
 @Table({
     tableName  : 'uma_tbl_mobile_users',

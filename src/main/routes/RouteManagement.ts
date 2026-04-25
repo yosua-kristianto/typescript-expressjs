@@ -1,5 +1,5 @@
-import {BaseResponse} from '../common/facade/BaseResponse';
 import express from 'express';
+import { registerCoreRoutes } from 'cuakx-express-core/api';
 /*
 |--------------------------------------------------------------------------
 | Import Controllers
@@ -12,36 +12,35 @@ import express from 'express';
 |
 */
 import ExampleController from "../api/example/ExampleController";
-import UserController from "../api/user/UserController";
+import config from '@config/Config';
 /**
  * API root point. Just to make sure the API is okay.
  */
-import config from '../config/Config';
+import { BaseResponse, handleBaseResponse} from 'cuakx-express-core/facade/response.util';
 
 const route = express.Router();
 
 // Register your BaseController in here
 route.use(ExampleController);
-route.use(UserController);
+registerCoreRoutes(route);
 
-route.get('/', (req, res) => {
-   const date = new Date();  
-   
+route.get('/', handleBaseResponse((req: express.Request) => {
+   const date = new Date();
+
    const data = {
      "app": config.server.app,
      "app_time_zone": Intl.DateTimeFormat().resolvedOptions().timeZone,
      "time": date.toLocaleString()
    };
- 
+
    return BaseResponse.ok(
      data,
      "This service is running",
-     res
    );
- });
- 
+}));
 
 /**
  * Always put this on the bottom of routes file
  */
 export default route;
+

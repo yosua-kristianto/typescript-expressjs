@@ -1,23 +1,22 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
 
     "rootDir": "src",
     "outDir": "dist",
 
-    "baseUrl": "src",
-
     "paths": {
-      "@api/*": ["main/api/*"],
-      "@common/*": ["main/common/*"],
-      "@config/*": ["main/config/*"],
-      "@messaging/*": ["main/messaging/*"],
-      "@model/*": ["main/model/*"],
-      "@entity/*": ["main/model/entity/*"],
-      "@repository/*": ["main/repository/*"],
-      "@routes/*": ["main/routes/*"]
+      "@api/*": ["./src/main/api/*"],
+      "@common/*": ["./src/main/common/*"],
+      "@config/*": ["./src/main/config/*"],
+      "@messaging/*": ["./src/main/messaging/*"],
+      "@model/*": ["./src/main/model/*"],
+      "@entity/*": ["./src/main/model/entity/*"],
+      "@repository/*": ["./src/main/repository/*"],
+      "@routes/*": ["./src/main/routes/*"],
+      "@res/*": ["./src/resources/*"],
     },
 
     "strict": true,

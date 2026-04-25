@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import {Request} from "express";
 import {JWTPayload} from "./JWTPayload";
-import {ErrorHandler} from "../../../config/Exception";
+import { ErrorHandler } from 'cuakx-express-core/config';
+
+// import {ErrorHandler} from "../../../config/Exception";
 
 /**
  * @author https://github.com/CuaMcCarsaree44

@@ -4,7 +4,7 @@
  * You can specify every unit Tests in here.
  */
 import {ExampleControllerHandler} from "../main/api/example/ExampleControllerHandler";
-import {ExampleAgeBelowEightTeenException} from "../main/common/exception/example/ExampleAgeBelowEightTeenException";
+import {ExampleAgeBelowEightTeenException} from "../main/api/example/exception/ExampleAgeBelowEightTeenException";
 
 test("[POSITIVE] Should be return true when given 19", () => {
   expect(new ExampleControllerHandler().ageValidation(19))

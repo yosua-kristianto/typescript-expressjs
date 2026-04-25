@@ -5,6 +5,7 @@ dotenv.config();
 
 export default {
   "definition": {
+    "openapi": "3.0.0",
     "info": {
       "title": `${process.env.APP_NAME}`,
       "description": "Just another Swagger UI project",
@@ -14,13 +15,14 @@ export default {
       },
       "version": "2.0"
     },
-    "servers": [`${process.env.SERVER_URI}:${process.env.SERVER_PORT}`],
-    "swagger": "2.0",
+    "servers": [{ "url": `http://${process.env.SERVER_URI}:${process.env.SERVER_PORT}` }],
     "schemes": ["http"],
     "consumes": ["application/json"],
     "produces": ["application/json"]
   },
   "apis": [
-    path.resolve('src/main/api/controller/*.ts')
+    path.resolve('src/main/api/**/*.ts'),
+    path.resolve('src/main/routes/**/*.ts'),
+    path.resolve('src/resources/swagger/**/*.yaml')
   ],
 }

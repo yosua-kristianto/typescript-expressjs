@@ -1,14 +1,17 @@
-import {BaseController} from '../BaseController';
-import express, {Request, Response} from 'express';
-import {BaseResponse} from '../../model/dto/BaseResponse';
-import ExampleValidation from '../../common/validation/ExampleValidation';
-import AdditionParamsRequestValidation from "../../common/validation/example/AdditionParamsRequestValidation";
-import ExampleAgeInputRequestValidation from "../../common/validation/example/ExampleAgeInputRequestValidation";
+import { BaseController, Request } from 'cuakx-express-core/api';
+import express from 'express';
+import { BaseResponse } from 'cuakx-express-core/facade/response.util';
+import ExampleValidation from './validation/ExampleValidation';
+import AdditionParamsRequestValidation from "./validation/AdditionParamsRequestValidation";
+import ExampleAgeInputRequestValidation from "./validation/ExampleAgeInputRequestValidation";
+import ExampleMultipartUploadValidation from './validation/ExampleMultipartUploadValidation';
 import {ExampleControllerHandler} from "./ExampleControllerHandler";
-import {DB} from '../../config/DBFacade';
-import { MessagingProducer } from '../../messaging/pusher/MessagingPusher';
+import { ExampleRequestDTO } from './dto/request/ExampleRequestDTO';
+import { ExampleMultipartUploadRequestDTO } from './dto/request/ExampleMultipartUploadRequestDTO';
+// import {DB} from 'cuakx-express-core/config';
 
-const app = express.Router();
+
+// import { MessagingProducer } from '../../messaging/pusher/MessagingPusher';
 
 class ExampleController extends BaseController {
 
@@ -21,7 +24,10 @@ class ExampleController extends BaseController {
      * This API will return every request that sent to body, with constraint of validation provided.
      * @see ExampleValidation
      */
-    app.get("/example", (request: Request, response: Response) => BaseResponse.ok(request.body, "Success", response));
+    this.get<ExampleRequestDTO>("/example", (dto: Request<ExampleRequestDTO>): BaseResponse<ExampleRequestDTO> => {
+      console.log("Kinthil")
+      return BaseResponse.ok(dto.body, "Success")
+    });
 
     /**
      * @method POST
@@ -30,21 +36,8 @@ class ExampleController extends BaseController {
      * This API will return every request that sent to body, with constraint of validation provided.
      * @see ExampleValidation
      */
-    app.post("/example", ExampleValidation, (request: Request, response: Response) => {
-      super.requestValidator(request);
-
-      return BaseResponse.ok(request.body, "Success", response);
-    });
-
-    /**
-     * @method POST
-     * exampleMessagingProducer
-     */
-    app.post("/example/messaging/producer", (request: Request, response: Response) => {
-
-      MessagingProducer.producer();
-
-      return BaseResponse.ok(null, "Success produce message!", response);
+    this.post<ExampleRequestDTO>("/example", ExampleValidation, (dto: Request<ExampleRequestDTO>): BaseResponse => {
+      return BaseResponse.ok(dto.body, "Success");
     });
 
     /**
@@ -53,13 +46,10 @@ class ExampleController extends BaseController {
      *
      * This API will make an addition from param_1 with param_2
      */
-    app.post("/addition", AdditionParamsRequestValidation, (request: Request, response: Response) => {
-      super.requestValidator(request);
-
+    this.post<any>("/addition", AdditionParamsRequestValidation, (dto: Request<any>): BaseResponse => {
       return BaseResponse.ok(
-        (new ExampleControllerHandler().addition(request.body.param_1, request.body.param_2)),
-        "Success",
-        response
+        (new ExampleControllerHandler().addition(dto.body.param_1, dto.body.param_2)),
+        "Success"
       );
     });
 
@@ -69,26 +59,57 @@ class ExampleController extends BaseController {
      *
      * This function will show how an exception will be behaviour.
      */
-    app.post("/exception-handling-test", ExampleAgeInputRequestValidation, (request: Request, response: Response) => {
-      super.requestValidator(request);
-
+    this.post<any>("/exception-handling-test", ExampleAgeInputRequestValidation, (dto: Request<any>): BaseResponse => {
       return BaseResponse.ok(
-        (new ExampleControllerHandler().ageValidation(request.body.age)),
-        "Success",
-        response
+        (new ExampleControllerHandler().ageValidation(dto.body.age)),
+        "Success"
       );
     });
 
-    app.post("/sample-db3", async (request: Request, response: Response) => {
+    /**
+     * @method POST
+     * multipartUploadExample
+     *
+     * This API demonstrates multipart/form-data handling end-to-end.
+     *
+     * Required multipart fields:
+     * - title: string
+     * - document: file
+     *
+     * Optional multipart fields:
+     * - description: string
+     */
+    this.post<ExampleMultipartUploadRequestDTO>(
+      "/example/upload",
+      this.multipartSingle('document'),
+      ExampleMultipartUploadValidation,
+      (dto: Request<ExampleMultipartUploadRequestDTO>): BaseResponse => {
+        return BaseResponse.ok(
+          {
+            title: dto.body.title,
+            description: dto.body.description ?? null,
+            file: dto.file ? {
+              field_name: dto.file.fieldname,
+              original_name: dto.file.originalname,
+              mime_type: dto.file.mimetype,
+              size: dto.file.size
+            } : null
+          },
+          'Multipart upload received successfully'
+        );
+      }
+    );
 
-      return BaseResponse.ok(
-        (await DB.connection('main').query("SELECT TOP 1 t.* FROM some_tablename t"))[0],
-        "Success",
-        response
-      );
-    });
+    // app.post("/sample-db3", async (request: Request, response: Response) => {
 
-    return app;
+    //   return BaseResponse.ok(
+    //     (await DB.connection('main').query("SELECT TOP 1 t.* FROM some_tablename t"))[0],
+    //     "Success",
+    //     response
+    //   );
+    // });
+
+    return this.app;
   }
 
 }

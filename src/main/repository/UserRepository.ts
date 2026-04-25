@@ -1,33 +1,22 @@
-import User from '../model/entity/User';
-import {CreateUserDTO} from '../model/dto/request/CreateUserDTO';
+import MobileUser from '../model/entity/MobileUser';
+import {IUserRepository} from './IUserRepository';
 
-export interface UserRepository {
-  
-  /**
-   * findUserById
-   *  A repository to find user data by id.
-   * 
-   * @param number id
-   * 
-   * @return /model/entity/User
-   */
-  findUserById(id: number): Promise<User>;
+class UserRepository implements IUserRepository {
 
-  /**
-   * getAllUser
-   *  A repository to get all user data.
-   * 
-   * @return Array<User>
-   */
-  getAllUser(): Promise<User[]>;
+  findUserById = async(id: number): Promise<MobileUser> =>
+    MobileUser.findOne({
+      where: {
+        deleted_at: null,
+        id: id
+      }
+    }).then(resultSet => {
+      if(resultSet === null) throw new Error("User not found");
 
-  /**
-   * createUser
-   *  A repository to create new User by
-   *  designed DTO.
-   * 
-   * @return User
-   */
-  createUser(request: CreateUserDTO): Promise<User>;
+      return resultSet;
+    });
 
+  getAllUser = async(): Promise<Array<MobileUser>> => MobileUser.findAll({where: {deleted_at: null}});
+    
 }
+
+export default new UserRepository();
